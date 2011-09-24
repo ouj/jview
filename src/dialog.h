@@ -14,6 +14,7 @@ public:
 	JImageDialog(QDialog *parent = 0);
     void                    Init();
 	void					setImage(const QString &filename);
+    void                    loadImage(const string &filename);
     void                    dragEnterEvent(QDragEnterEvent *event);
     void                    dropEvent(QDropEvent *event);
 public slots:

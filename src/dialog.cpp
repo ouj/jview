@@ -3,18 +3,30 @@
 #include <QtCore/QFileInfo>
 #include <QtGui/QMouseEvent>
 #include <QtCore/QUrl>
+#include "image.h"
 
 JImageDialog::JImageDialog( QDialog *parent /*= 0*/ ) 
-	: QDialog(parent)
-{
+	: QDialog(parent) {
 	form.setupUi(this);
     setAcceptDrops(true);
 }
 
-void JImageDialog::setImage( const QString &f )
-{
+void JImageDialog::loadImage(const string &filename) {
+    string extension = filename.substr(filename.size() - 4);
+    if (extension == ".exr") {
+        image = loadExr(filename);
+    } else if (extension == ".tga") {
+        image = loadTga(filename);
+    } else if (extension == ".ppm" || extension == ".pfm") {
+        image = loadPnm3f(filename);
+    } else {
+        error("unknown file format");
+    }
+}
+
+void JImageDialog::setImage( const QString &f ) {
 	filename = QFileInfo(f).fileName();
-	image = loadPnm3f(f.toStdString());
+    loadImage(f.toStdString());
 	form.viewWidget->setImage(&image);
     setWindowTitle(f);
 
@@ -26,42 +38,36 @@ void JImageDialog::setImage( const QString &f )
 }
 
 
-void JImageDialog::dragEnterEvent(QDragEnterEvent *event)
-{
+void JImageDialog::dragEnterEvent(QDragEnterEvent *event) {
     if (event->mimeData()->hasUrls())
         event->acceptProposedAction();
 }
 
-void JImageDialog::dropEvent(QDropEvent *event)
-{
+void JImageDialog::dropEvent(QDropEvent *event) {
     setImage(event->mimeData()->urls()[0].toLocalFile());
     event->acceptProposedAction();
     setFocus();
 }
 
-void JImageDialog::setExposureLabel( float exposure )
-{
+void JImageDialog::setExposureLabel( float exposure ) {
     QString eStr;
     eStr.sprintf("%.2f", exposure);
     form.exposureLabel->setText(eStr);
 }
 
-void JImageDialog::setGammaLabel( float gamma )
-{
+void JImageDialog::setGammaLabel( float gamma ) {
     QString gStr;
     gStr.sprintf("%.2f", gamma);
     form.gammaLabel->setText(gStr);
 }
 
-void JImageDialog::setScaleLabel( float scale )
-{
+void JImageDialog::setScaleLabel( float scale ) {
     QString sStr;
     sStr.sprintf("%.3f", scale);
     form.scaleLabel->setText(sStr);
 }
 
-void JImageDialog::setCoordinateLabel( int x, int y )
-{
+void JImageDialog::setCoordinateLabel( int x, int y ) {
     QString cStr;
     cStr.sprintf("[%4d, %4d]", x, y);
     form.coordinateLabel->setText(cStr);
@@ -74,11 +80,9 @@ void formatNumber(float v, QString &f) {
         f.sprintf("%9.4f", v);
 }
 
-void JImageDialog::setColorLabel( int x, int y )
-{
+void JImageDialog::setColorLabel( int x, int y ) {
     QString str;
-    if (x >= 0 && x < image.width() && y >= 0 && y < image.height())
-    {
+    if (x >= 0 && x < image.width() && y >= 0 && y < image.height()) {
         const vec3f &c = image.at(x, y);
         QString fx, fy, fz;
         formatNumber(c.x, fx);
