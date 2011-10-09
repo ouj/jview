@@ -4,6 +4,8 @@
 #include <common/array.h>
 #include <common/vec.h>
 
+using namespace near;
+
 class JImageView : public QWidget
 {
     Q_OBJECT
