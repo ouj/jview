@@ -43,13 +43,12 @@ GET_FILENAME_COMPONENT(COMMON_PATH "${NEAR_PATH}/common" ABSOLUTE)
 
 #include directories
 include_directories(${PROJECT_SOURCE_DIR}/src)
-include_directories(/homebrew/include)
 include_directories(/usr/local/include)
 include_directories(${NEAR_PATH})
 
 #library directories
-link_directories(/homebrew/lib)
-link_directories(/usr/local/lib)
+#link_directories(/homebrew/lib)
+#link_directories(/usr/local/lib)
 
 
 if(WIN32)
