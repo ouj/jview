@@ -5,7 +5,6 @@
 #include <common/vec.h>
 #include <common/array.h>
 
-using namespace near;
 using std::string;
 
 sarray2<vec3f> loadExr(const string &name);

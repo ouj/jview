@@ -4,7 +4,6 @@
 #include <common/array.h>
 #include <common/vec.h>
 
-using namespace near;
 
 class JImageView : public QWidget
 {
@@ -41,6 +40,8 @@ private:
     QImage                  qtimage;
     float                   exposure;
     float                   gamma;
+    bool                    showNaN;
+    bool                    showNeg;
 };
 
 #endif // _JVIEW_H_

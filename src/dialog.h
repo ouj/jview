@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 
-using namespace near;
 using std::vector;
 using std::string;
 
