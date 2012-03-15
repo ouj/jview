@@ -7,17 +7,14 @@
 #include "QtGui/qmessagebox.h"
 
 JImageView::JImageView(QWidget* parent, Qt::WindowFlags f)
-    : QWidget(parent, f), mousePressed(false), offset(0, 0), scale(1.0f), exposure(0.0f), gamma(2.2f), showNaN(false), showNeg(false)
-{
+    : QWidget(parent, f), mousePressed(false), offset(0, 0), scale(1.0f), exposure(0.0f), gamma(2.2f), showNaN(false), showNeg(false) {
 }
 
 
-JImageView::~JImageView(void)
-{
+JImageView::~JImageView(void) {
 }
 
-void JImageView::setImage( const sarray2<vec3f> *image )
-{
+void JImageView::setImage( const sarray2<vec3f> *image ) {
     this->image = image;
     qtimage = QImage(image->width(), image->height(), QImage::Format_RGB32);
     update();
@@ -27,22 +24,19 @@ void JImageView::setImage( const sarray2<vec3f> *image )
     center();
 }
 
-void JImageView::setGamma(float gamma)
-{
+void JImageView::setGamma(float gamma) {
     this->gamma = gamma;
     gammaChanged(this->gamma);
     update();
 }
 
-void JImageView::setExposure(float exposure)
-{
+void JImageView::setExposure(float exposure) {
     this->exposure = exposure;
     exposureChanged(this->exposure);
     update();
 }
 
-void JImageView::setScale( float nscale )
-{
+void JImageView::setScale( float nscale ) {
     QPoint ct(width() / 2, height() / 2);
     QPoint d = (ct - offset) / scale;
     offset -= d * (nscale - scale);
@@ -53,15 +47,12 @@ void JImageView::setScale( float nscale )
     repaint();
 }
 
-void JImageView::update()
-{
+void JImageView::update() {
     if (image == 0)
         return;
 
-    for (int j = 0; j < qtimage.height(); j++)
-    {
-        for (int i = 0; i < qtimage.width(); i++)
-        {
+    for (int j = 0; j < qtimage.height(); j++) {
+        for (int i = 0; i < qtimage.width(); i++) {
             const vec3f &p = image->at(i, j);
             if (showNaN && isanynan(p)) {
                 qtimage.setPixel(i, j, qRgb(255, 0, 0));

@@ -37,14 +37,12 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/${BIN_DIR_SUFFIX})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin/${BIN_DIR_SUFFIX})
 
 
-GET_FILENAME_COMPONENT(NEAR_PATH "${PROJECT_SOURCE_DIR}/../near/src" ABSOLUTE)
 GET_FILENAME_COMPONENT(COMMON_PATH "${NEAR_PATH}/common" ABSOLUTE)
 
 
 #include directories
 include_directories(${PROJECT_SOURCE_DIR}/src)
 include_directories(/usr/local/include)
-include_directories(${NEAR_PATH})
 
 #library directories
 #link_directories(/homebrew/lib)
@@ -97,6 +95,5 @@ else()
     SET(EXR_LIB ${OPENEXR_LIBRARIES})
 endif()
 
-add_subdirectory(${COMMON_PATH} common)
 add_subdirectory(src)
 

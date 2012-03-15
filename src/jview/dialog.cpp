@@ -3,7 +3,7 @@
 #include <QtCore/QFileInfo>
 #include <QtGui/QMouseEvent>
 #include <QtCore/QUrl>
-#include "image.h"
+#include <common/image.h>
 
 JImageDialog::JImageDialog( QDialog *parent /*= 0*/ ) 
 	: QDialog(parent) {
