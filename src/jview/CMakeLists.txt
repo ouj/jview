@@ -18,10 +18,9 @@ lm.icns
 
 SOURCE_GROUP("Source Files\\gen" FILES ${MOC_FILES} ${UI_FILES} ${RESOURCE_FILES})
 
-add_executable(jviewer WIN32 MACOSX_BUNDLE ${SOURCES})
+add_executable(jview WIN32 MACOSX_BUNDLE ${SOURCES})
 
-target_link_libraries(jviewer ${QT_LIBRARIES} common ${EXR_LIB})
-#set_default_properties(jviewer)
+target_link_libraries(jview ${QT_LIBRARIES} common ${EXR_LIB})
 
 if(APPLE)
 	SET( MACOSX_BUNDLE_INFO_STRING "Jiawei's Viewer")
@@ -30,6 +29,6 @@ if(APPLE)
 	SET( MACOSX_BUNDLE_GUI_IDENTIFIER "dartmouth.edu")
 	SET( MACOSX_BUNDLE_BUNDLE_NAME "J Viewer")
 	SET( MACOSX_BUNDLE_COPYRIGHT "Jiawei Ou allright reserved..")
-    SET_TARGET_PROPERTIES(jviewer PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${PROJECT_SOURCE_DIR}/src/jview/Info.plist)
+    SET_TARGET_PROPERTIES(jview PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${PROJECT_SOURCE_DIR}/src/jview/Info.plist)
 	SET_SOURCE_FILES_PROPERTIES(lm.icns PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
 endif()
