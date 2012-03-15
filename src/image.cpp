@@ -240,3 +240,27 @@ sarray2<vec3f> loadTga(const string &name) {
     fprintf(stdout,"Read TGA image %s (%d x %d)\n", name.c_str(), width, height);
     return image;
 }
+
+#include <QtGui/QImage>
+sarray2<vec3f> loadLdr(const string &name) {
+    QImage im;
+    if (im.load(name.c_str())) {
+        sarray2<vec3f> image(im.width(), im.height());
+        for (int j = 0; j < im.height(); j++) {
+            for (int i = 0; i < im.width(); i++) {
+                QRgb rgb = im.pixel(i, j);
+                image.at(i, j) = makevec3f(qRed(rgb) / 255.0f, 
+                                           qGreen(rgb) / 255.0f, 
+                                           qBlue(rgb) / 255.0f);
+            }
+        }
+        return image;
+    } else {
+        fprintf(stderr, "failed to load image %s\n", name.c_str());
+        return sarray2<vec3f>();
+    }
+}
+
+
+
+

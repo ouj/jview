@@ -11,23 +11,36 @@ JImageDialog::JImageDialog( QDialog *parent /*= 0*/ )
     setAcceptDrops(true);
 }
 
-void JImageDialog::loadImage(const string &filename) {
+void JImageDialog::loadImage(const string &filename, bool &isHDR) {
     string extension = filename.substr(filename.size() - 4);
     if (extension == ".exr") {
         image = loadExr(filename);
+        isHDR = true;
     } else if (extension == ".tga") {
         image = loadTga(filename);
-    } else if (extension == ".ppm" || extension == ".pfm") {
+        isHDR = false;
+    } else if (extension == ".ppm") {
         image = loadPnm3f(filename);
+        isHDR = false;
+    } else if (extension == ".pfm") {
+        image = loadPnm3f(filename);
+        isHDR = true;  
     } else {
-        error("unknown file format");
+        image = loadLdr(filename);
+        isHDR = false;
     }
 }
 
 void JImageDialog::setImage( const QString &f ) {
 	filename = QFileInfo(f).fileName();
-    loadImage(f.toStdString());
+    bool isHDR = true;
+    loadImage(f.toStdString(), isHDR);
 	form.viewWidget->setImage(&image);
+    if (isHDR) {
+        form.viewWidget->setExposrueGamma(0.0f, 2.2f);
+    } else {
+        form.viewWidget->setExposrueGamma(0.0f, 1.0f);
+    }
     setWindowTitle(f);
 
     int x = image.width();

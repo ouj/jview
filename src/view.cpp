@@ -178,7 +178,7 @@ void JImageView::keyPressEvent( QKeyEvent *event )
 
 void JImageView::reset()
 {
-    setExposrueGamma(0.0f, 2.2f);
+    //setExposrueGamma(0.0f, 2.2f);
     setScale(1.0f);
     center();
     update();
