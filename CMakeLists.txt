@@ -48,14 +48,6 @@ include_directories(/usr/local/include)
 #link_directories(/homebrew/lib)
 #link_directories(/usr/local/lib)
 
-
-if(WIN32)
-	GET_FILENAME_COMPONENT(QT_PATH "${PROJECT_SOURCE_DIR}/../Qt.win" ABSOLUTE)
-elseif(APPLE)
-	GET_FILENAME_COMPONENT(QT_PATH "./" ABSOLUTE)
-endif()
-include(${QT_PATH}/use_qt.cmake)
-
 # compiler flags
 if(MAKEFILES)
     if(NOT BUILD_NEWGCC)
