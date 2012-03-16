@@ -1,5 +1,5 @@
 #include "application.h"
-#include "dialog.h"
+#include "window.h"
 #include <QtGui/QFileOpenEvent>
 #include <QtCore/QEvent>
 

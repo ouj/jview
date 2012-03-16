@@ -6,10 +6,12 @@
 #include <common/stdmath.h>
 #include <QtGui/QMessageBox>
 #include "application.h"
-#include "dialog.h"
+#include "window.h"
 
 JImageView::JImageView(QWidget* parent, Qt::WindowFlags f)
-    : QWidget(parent, f), mousePressed(false), offset(0, 0), scale(1.0f), exposure(0.0f), gamma(2.2f), showInvalid(false) {
+    : QWidget(parent, f), mousePressed(false), 
+      offset(0, 0), scale(1.0f), exposure(0.0f), 
+      gamma(2.2f), showInvalid(false) {
 }
 
 
@@ -21,7 +23,6 @@ void JImageView::setImage( const sarray2<vec3f> *image ) {
     qtimage = QImage(image->width(), image->height(), QImage::Format_RGB32);
     update();
     qApp->activeWindow()->resize(image->width(), image->height() + 70);
-    //resize(image->width(), image->height());
     activateWindow();
     setFocus();
     center();
@@ -43,10 +44,8 @@ void JImageView::setScale( float nscale ) {
     QPoint ct(width() / 2, height() / 2);
     QPoint d = (ct - offset) / scale;
     offset -= d * (nscale - scale);
-
     scale = nscale;
     scaleChanged(scale);
-
     repaint();
 }
 

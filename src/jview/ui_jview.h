@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'jview.ui'
 **
-** Created: Fri Mar 16 11:45:39 2012
+** Created: Fri Mar 16 11:51:13 2012
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -256,9 +256,25 @@ public:
     {
         JViewMainWindow->setWindowTitle(QApplication::translate("JViewMainWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
         actionOpen->setText(QApplication::translate("JViewMainWindow", "Open", 0, QApplication::UnicodeUTF8));
-        actionSave->setText(QApplication::translate("JViewMainWindow", "Save", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        actionOpen->setToolTip(QApplication::translate("JViewMainWindow", "Open an image", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+        actionOpen->setShortcut(QApplication::translate("JViewMainWindow", "Ctrl+N", 0, QApplication::UnicodeUTF8));
+        actionSave->setText(QApplication::translate("JViewMainWindow", "&Save LDR", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        actionSave->setToolTip(QApplication::translate("JViewMainWindow", "Save LDR image", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+        actionSave->setShortcut(QApplication::translate("JViewMainWindow", "Ctrl+S", 0, QApplication::UnicodeUTF8));
         actionClose->setText(QApplication::translate("JViewMainWindow", "Close", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        actionClose->setToolTip(QApplication::translate("JViewMainWindow", "Close Window", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+        actionClose->setShortcut(QApplication::translate("JViewMainWindow", "Ctrl+W", 0, QApplication::UnicodeUTF8));
         actionQuit->setText(QApplication::translate("JViewMainWindow", "Quit", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        actionQuit->setToolTip(QApplication::translate("JViewMainWindow", "Quit Applicatioin", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+        actionQuit->setShortcut(QApplication::translate("JViewMainWindow", "Ctrl+Q", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_WHATSTHIS
         groupBox->setWhatsThis(QApplication::translate("JViewMainWindow", "Additional Image Options", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS

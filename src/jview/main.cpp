@@ -5,7 +5,7 @@
 
 #include <QtGui/QtGui>
 #include <QtCore/QtCore>
-#include "dialog.h"
+#include "window.h"
 #include "application.h"
 
 using std::string;

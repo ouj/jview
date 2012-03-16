@@ -1,12 +1,12 @@
 QT4_UI_FILES(UI_FILES ui/jview.ui)
-QT4_MOC_FILES(MOC_FILES view.h dialog.h application.h)
+QT4_MOC_FILES(MOC_FILES view.h window.h application.h)
 
 include_directories(${PROJECT_SOURCE_DIR})
 
 set(SOURCES
 main.cpp
-dialog.h
-dialog.cpp
+window.h
+window.cpp
 view.h
 view.cpp
 application.h

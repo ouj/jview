@@ -1,4 +1,4 @@
-#include "dialog.h"
+#include "window.h"
 #include <common/pam.cpp>
 #include <QtCore/QFileInfo>
 #include <QtGui/QMouseEvent>
