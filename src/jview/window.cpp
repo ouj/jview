@@ -78,9 +78,7 @@ void JImageWindow::saveLDRImage() {
     QFileDialog::getSaveFileName(this,
                                  tr("Save LDR Image"), 
                                  folderName, 
-                                 tr("ALL Images (*.pfm *.exr *.tga *.png *.jpg *.jpeg *.bmp *.tiff);;"
-                                    "HDR Image Files (*.pfm *.exr *.tga);;" 
-                                    "LDR Images (*.png *.jpg *.jpeg *.bmp *.tiff)"));
+                                 tr("LDR Images (*.png *.jpg *.jpeg *.bmp *.tiff)"));
     saveLdr(form.viewWidget->getImage(), fname.toStdString());
 }
 
