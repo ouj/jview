@@ -133,9 +133,9 @@ void JImageView::keyPressEvent( QKeyEvent *event )
     if (event->matches(QKeySequence::Refresh)) {
         reset();
     } else if (event->matches(QKeySequence::Open)) {
-        static_cast<JImageWindow*>(parentWidget()->parentWidget())->openNewImage();
+        static_cast<JImageWindow*>(qApp->activeWindow())->openNewImage();
     } else if (event->matches(QKeySequence::Close)) {
-        parentWidget()->close();
+        qApp->activeWindow()->close();
     } else {
         switch(event->key()) {
             case Qt::Key_1: setExposrueGamma(0.0f, 1.0f); break;

@@ -346,5 +346,93 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>viewWidget</sender>
+   <signal>coordinateChanged(int,int)</signal>
+   <receiver>JViewMainWindow</receiver>
+   <slot>setCoordinateLabel(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>284</x>
+     <y>243</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>522</x>
+     <y>-16</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>viewWidget</sender>
+   <signal>coordinateChanged(int,int)</signal>
+   <receiver>JViewMainWindow</receiver>
+   <slot>setColorLabel(int,int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>433</x>
+     <y>412</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>193</x>
+     <y>-11</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>viewWidget</sender>
+   <signal>exposureChanged(float)</signal>
+   <receiver>JViewMainWindow</receiver>
+   <slot>setExposureLabel(float)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>245</x>
+     <y>532</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>124</x>
+     <y>-2</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>viewWidget</sender>
+   <signal>gammaChanged(float)</signal>
+   <receiver>JViewMainWindow</receiver>
+   <slot>setGammaLabel(float)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>188</x>
+     <y>423</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>637</x>
+     <y>-4</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>viewWidget</sender>
+   <signal>scaleChanged(float)</signal>
+   <receiver>JViewMainWindow</receiver>
+   <slot>setScaleLabel(float)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>413</x>
+     <y>388</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>490</x>
+     <y>-9</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>setCoordinateLabel(int,int)</slot>
+  <slot>setColorLabel(int,int)</slot>
+  <slot>setScaleLabel(float)</slot>
+  <slot>setExposureLabel(float)</slot>
+  <slot>setGammaLabel(float)</slot>
+ </slots>
 </ui>

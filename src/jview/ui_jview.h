@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'jview.ui'
 **
-** Created: Fri Mar 16 11:15:08 2012
+** Created: Fri Mar 16 11:34:11 2012
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -226,6 +226,11 @@ public:
         JViewMainWindow->setStatusBar(statusbar);
 
         retranslateUi(JViewMainWindow);
+        QObject::connect(viewWidget, SIGNAL(coordinateChanged(int,int)), JViewMainWindow, SLOT(setCoordinateLabel(int,int)));
+        QObject::connect(viewWidget, SIGNAL(coordinateChanged(int,int)), JViewMainWindow, SLOT(setColorLabel(int,int)));
+        QObject::connect(viewWidget, SIGNAL(exposureChanged(float)), JViewMainWindow, SLOT(setExposureLabel(float)));
+        QObject::connect(viewWidget, SIGNAL(gammaChanged(float)), JViewMainWindow, SLOT(setGammaLabel(float)));
+        QObject::connect(viewWidget, SIGNAL(scaleChanged(float)), JViewMainWindow, SLOT(setScaleLabel(float)));
 
         QMetaObject::connectSlotsByName(JViewMainWindow);
     } // setupUi

@@ -22,7 +22,9 @@ void JImageWindow::openNewImage() {
                                  tr("ALL Images (*.pfm *.exr *.tga *.png *.jpg *.jpeg *.bmp *.tiff);;"
                                     "HDR Image Files (*.pfm *.exr *.tga);;" 
                                     "LDR Images (*.png *.jpg *.jpeg *.bmp *.tiff)"));
-    static_cast<JImageApplication*>(qApp)->Open(fname);
+    if (QFile::exists(fname)) {
+        static_cast<JImageApplication*>(qApp)->Open(fname);
+    }
 }
 
 void JImageWindow::loadImage(const string &filename, bool &isHDR) {
