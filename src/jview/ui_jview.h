@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'jview.ui'
 **
-** Created: Fri Mar 16 11:34:11 2012
+** Created: Fri Mar 16 11:45:39 2012
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -19,9 +19,9 @@
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QMainWindow>
+#include <QtGui/QMenu>
 #include <QtGui/QMenuBar>
 #include <QtGui/QSpacerItem>
-#include <QtGui/QStatusBar>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
 #include "view.h"
@@ -31,6 +31,10 @@ QT_BEGIN_NAMESPACE
 class Ui_JViewMainWindow
 {
 public:
+    QAction *actionOpen;
+    QAction *actionSave;
+    QAction *actionClose;
+    QAction *actionQuit;
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
     QGroupBox *groupBox;
@@ -59,15 +63,23 @@ public:
     QSpacerItem *horizontalSpacer;
     JImageView *viewWidget;
     QMenuBar *menubar;
-    QStatusBar *statusbar;
+    QMenu *menuFile;
 
     void setupUi(QMainWindow *JViewMainWindow)
     {
         if (JViewMainWindow->objectName().isEmpty())
             JViewMainWindow->setObjectName(QString::fromUtf8("JViewMainWindow"));
-        JViewMainWindow->resize(707, 808);
+        JViewMainWindow->resize(512, 600);
         JViewMainWindow->setCursor(QCursor(Qt::CrossCursor));
         JViewMainWindow->setContextMenuPolicy(Qt::DefaultContextMenu);
+        actionOpen = new QAction(JViewMainWindow);
+        actionOpen->setObjectName(QString::fromUtf8("actionOpen"));
+        actionSave = new QAction(JViewMainWindow);
+        actionSave->setObjectName(QString::fromUtf8("actionSave"));
+        actionClose = new QAction(JViewMainWindow);
+        actionClose->setObjectName(QString::fromUtf8("actionClose"));
+        actionQuit = new QAction(JViewMainWindow);
+        actionQuit->setObjectName(QString::fromUtf8("actionQuit"));
         centralwidget = new QWidget(JViewMainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         verticalLayout = new QVBoxLayout(centralwidget);
@@ -212,18 +224,23 @@ public:
         viewWidget->setMouseTracking(true);
         viewWidget->setFocusPolicy(Qt::WheelFocus);
         viewWidget->setContextMenuPolicy(Qt::NoContextMenu);
-        viewWidget->setStyleSheet(QString::fromUtf8("background-color: black;"));
 
         verticalLayout->addWidget(viewWidget);
 
         JViewMainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(JViewMainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 707, 22));
+        menubar->setGeometry(QRect(0, 0, 512, 22));
+        menuFile = new QMenu(menubar);
+        menuFile->setObjectName(QString::fromUtf8("menuFile"));
         JViewMainWindow->setMenuBar(menubar);
-        statusbar = new QStatusBar(JViewMainWindow);
-        statusbar->setObjectName(QString::fromUtf8("statusbar"));
-        JViewMainWindow->setStatusBar(statusbar);
+
+        menubar->addAction(menuFile->menuAction());
+        menuFile->addAction(actionOpen);
+        menuFile->addAction(actionSave);
+        menuFile->addSeparator();
+        menuFile->addAction(actionClose);
+        menuFile->addAction(actionQuit);
 
         retranslateUi(JViewMainWindow);
         QObject::connect(viewWidget, SIGNAL(coordinateChanged(int,int)), JViewMainWindow, SLOT(setCoordinateLabel(int,int)));
@@ -238,6 +255,10 @@ public:
     void retranslateUi(QMainWindow *JViewMainWindow)
     {
         JViewMainWindow->setWindowTitle(QApplication::translate("JViewMainWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
+        actionOpen->setText(QApplication::translate("JViewMainWindow", "Open", 0, QApplication::UnicodeUTF8));
+        actionSave->setText(QApplication::translate("JViewMainWindow", "Save", 0, QApplication::UnicodeUTF8));
+        actionClose->setText(QApplication::translate("JViewMainWindow", "Close", 0, QApplication::UnicodeUTF8));
+        actionQuit->setText(QApplication::translate("JViewMainWindow", "Quit", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_WHATSTHIS
         groupBox->setWhatsThis(QApplication::translate("JViewMainWindow", "Additional Image Options", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
@@ -254,6 +275,7 @@ public:
         exposureLabel->setText(QApplication::translate("JViewMainWindow", "0.00", 0, QApplication::UnicodeUTF8));
         label_4->setText(QApplication::translate("JViewMainWindow", "gamma:", 0, QApplication::UnicodeUTF8));
         gammaLabel->setText(QApplication::translate("JViewMainWindow", "2.20", 0, QApplication::UnicodeUTF8));
+        menuFile->setTitle(QApplication::translate("JViewMainWindow", "File", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

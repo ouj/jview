@@ -20,6 +20,7 @@ void JImageView::setImage( const sarray2<vec3f> *image ) {
     this->image = image;
     qtimage = QImage(image->width(), image->height(), QImage::Format_RGB32);
     update();
+    qApp->activeWindow()->resize(image->width(), image->height() + 70);
     //resize(image->width(), image->height());
     activateWindow();
     setFocus();
