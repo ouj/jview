@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'jdiff.ui'
 **
-** Created: Thu Mar 15 16:54:12 2012
+** Created: Fri Mar 16 00:16:24 2012
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -20,18 +20,22 @@
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QSpacerItem>
+#include <QtGui/QStackedWidget>
 #include <QtGui/QVBoxLayout>
-#include "view.h"
+#include <QtGui/QWidget>
 
 QT_BEGIN_NAMESPACE
 
-class Ui_JImageDialogForm
+class Ui_JDiffDialogForm
 {
 public:
     QVBoxLayout *verticalLayout;
-    JImageView *viewWidget;
     QGroupBox *groupBox;
     QVBoxLayout *verticalLayout_3;
+    QStackedWidget *stackedWidget;
+    QWidget *image1Page;
+    QWidget *image2Page;
+    QWidget *diffPage;
     QHBoxLayout *horizontalLayout_2;
     QSpacerItem *horizontalSpacer_4;
     QLabel *label_6;
@@ -55,34 +59,22 @@ public:
     QLabel *gammaLabel;
     QSpacerItem *horizontalSpacer;
 
-    void setupUi(QDialog *JImageDialogForm)
+    void setupUi(QDialog *JDiffDialogForm)
     {
-        if (JImageDialogForm->objectName().isEmpty())
-            JImageDialogForm->setObjectName(QString::fromUtf8("JImageDialogForm"));
-        JImageDialogForm->resize(515, 582);
+        if (JDiffDialogForm->objectName().isEmpty())
+            JDiffDialogForm->setObjectName(QString::fromUtf8("JDiffDialogForm"));
+        JDiffDialogForm->resize(515, 582);
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(JImageDialogForm->sizePolicy().hasHeightForWidth());
-        JImageDialogForm->setSizePolicy(sizePolicy);
-        JImageDialogForm->setSizeGripEnabled(true);
-        verticalLayout = new QVBoxLayout(JImageDialogForm);
+        sizePolicy.setHeightForWidth(JDiffDialogForm->sizePolicy().hasHeightForWidth());
+        JDiffDialogForm->setSizePolicy(sizePolicy);
+        JDiffDialogForm->setSizeGripEnabled(true);
+        verticalLayout = new QVBoxLayout(JDiffDialogForm);
         verticalLayout->setSpacing(5);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 5);
-        viewWidget = new JImageView(JImageDialogForm);
-        viewWidget->setObjectName(QString::fromUtf8("viewWidget"));
-        sizePolicy.setHeightForWidth(viewWidget->sizePolicy().hasHeightForWidth());
-        viewWidget->setSizePolicy(sizePolicy);
-        viewWidget->setCursor(QCursor(Qt::CrossCursor));
-        viewWidget->setMouseTracking(true);
-        viewWidget->setFocusPolicy(Qt::WheelFocus);
-        viewWidget->setContextMenuPolicy(Qt::NoContextMenu);
-        viewWidget->setStyleSheet(QString::fromUtf8("background-color: black;"));
-
-        verticalLayout->addWidget(viewWidget);
-
-        groupBox = new QGroupBox(JImageDialogForm);
+        groupBox = new QGroupBox(JDiffDialogForm);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
         groupBox->setEnabled(true);
         QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -97,6 +89,24 @@ public:
         verticalLayout_3 = new QVBoxLayout(groupBox);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(5, 5, 5, 0);
+        stackedWidget = new QStackedWidget(groupBox);
+        stackedWidget->setObjectName(QString::fromUtf8("stackedWidget"));
+        stackedWidget->setCursor(QCursor(Qt::CrossCursor));
+        stackedWidget->setFrameShape(QFrame::Box);
+        stackedWidget->setFrameShadow(QFrame::Sunken);
+        stackedWidget->setLineWidth(1);
+        image1Page = new QWidget();
+        image1Page->setObjectName(QString::fromUtf8("image1Page"));
+        stackedWidget->addWidget(image1Page);
+        image2Page = new QWidget();
+        image2Page->setObjectName(QString::fromUtf8("image2Page"));
+        stackedWidget->addWidget(image2Page);
+        diffPage = new QWidget();
+        diffPage->setObjectName(QString::fromUtf8("diffPage"));
+        stackedWidget->addWidget(diffPage);
+
+        verticalLayout_3->addWidget(stackedWidget);
+
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         horizontalSpacer_4 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
@@ -210,41 +220,39 @@ public:
         verticalLayout->addWidget(groupBox);
 
 
-        retranslateUi(JImageDialogForm);
-        QObject::connect(viewWidget, SIGNAL(exposureChanged(float)), JImageDialogForm, SLOT(setExposureLabel(float)));
-        QObject::connect(viewWidget, SIGNAL(gammaChanged(float)), JImageDialogForm, SLOT(setGammaLabel(float)));
-        QObject::connect(viewWidget, SIGNAL(scaleChanged(float)), JImageDialogForm, SLOT(setScaleLabel(float)));
-        QObject::connect(viewWidget, SIGNAL(coordinateChanged(int,int)), JImageDialogForm, SLOT(setCoordinateLabel(int,int)));
-        QObject::connect(viewWidget, SIGNAL(coordinateChanged(int,int)), JImageDialogForm, SLOT(setColorLabel(int,int)));
+        retranslateUi(JDiffDialogForm);
 
-        QMetaObject::connectSlotsByName(JImageDialogForm);
+        stackedWidget->setCurrentIndex(0);
+
+
+        QMetaObject::connectSlotsByName(JDiffDialogForm);
     } // setupUi
 
-    void retranslateUi(QDialog *JImageDialogForm)
+    void retranslateUi(QDialog *JDiffDialogForm)
     {
-        JImageDialogForm->setWindowTitle(QApplication::translate("JImageDialogForm", "Jiawei's Image Viewer", 0, QApplication::UnicodeUTF8));
+        JDiffDialogForm->setWindowTitle(QApplication::translate("JDiffDialogForm", "jdiff", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_WHATSTHIS
-        groupBox->setWhatsThis(QApplication::translate("JImageDialogForm", "Additional Image Options", 0, QApplication::UnicodeUTF8));
+        groupBox->setWhatsThis(QApplication::translate("JDiffDialogForm", "Additional Image Options", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
         groupBox->setTitle(QString());
-        label_6->setText(QApplication::translate("JImageDialogForm", "coordinate:", 0, QApplication::UnicodeUTF8));
-        coordinateLabel->setText(QApplication::translate("JImageDialogForm", "[0,0]", 0, QApplication::UnicodeUTF8));
-        label_7->setText(QApplication::translate("JImageDialogForm", "value:", 0, QApplication::UnicodeUTF8));
-        colorLabel->setText(QApplication::translate("JImageDialogForm", "[-----, ----- ,-----]", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("JImageDialogForm", "size:", 0, QApplication::UnicodeUTF8));
-        sizeLabel->setText(QApplication::translate("JImageDialogForm", "(0,0)", 0, QApplication::UnicodeUTF8));
-        label_2->setText(QApplication::translate("JImageDialogForm", "scale:", 0, QApplication::UnicodeUTF8));
-        scaleLabel->setText(QApplication::translate("JImageDialogForm", "1.0", 0, QApplication::UnicodeUTF8));
-        label_3->setText(QApplication::translate("JImageDialogForm", "exposure:", 0, QApplication::UnicodeUTF8));
-        exposureLabel->setText(QApplication::translate("JImageDialogForm", "0.00", 0, QApplication::UnicodeUTF8));
-        label_4->setText(QApplication::translate("JImageDialogForm", "gamma:", 0, QApplication::UnicodeUTF8));
-        gammaLabel->setText(QApplication::translate("JImageDialogForm", "2.20", 0, QApplication::UnicodeUTF8));
+        label_6->setText(QApplication::translate("JDiffDialogForm", "coordinate:", 0, QApplication::UnicodeUTF8));
+        coordinateLabel->setText(QApplication::translate("JDiffDialogForm", "[0,0]", 0, QApplication::UnicodeUTF8));
+        label_7->setText(QApplication::translate("JDiffDialogForm", "value:", 0, QApplication::UnicodeUTF8));
+        colorLabel->setText(QApplication::translate("JDiffDialogForm", "[-----, ----- ,-----]", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("JDiffDialogForm", "size:", 0, QApplication::UnicodeUTF8));
+        sizeLabel->setText(QApplication::translate("JDiffDialogForm", "(0,0)", 0, QApplication::UnicodeUTF8));
+        label_2->setText(QApplication::translate("JDiffDialogForm", "scale:", 0, QApplication::UnicodeUTF8));
+        scaleLabel->setText(QApplication::translate("JDiffDialogForm", "1.0", 0, QApplication::UnicodeUTF8));
+        label_3->setText(QApplication::translate("JDiffDialogForm", "exposure:", 0, QApplication::UnicodeUTF8));
+        exposureLabel->setText(QApplication::translate("JDiffDialogForm", "0.00", 0, QApplication::UnicodeUTF8));
+        label_4->setText(QApplication::translate("JDiffDialogForm", "gamma:", 0, QApplication::UnicodeUTF8));
+        gammaLabel->setText(QApplication::translate("JDiffDialogForm", "2.20", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class JImageDialogForm: public Ui_JImageDialogForm {};
+    class JDiffDialogForm: public Ui_JDiffDialogForm {};
 } // namespace Ui
 
 QT_END_NAMESPACE

@@ -1,10 +1,14 @@
 QT4_UI_FILES(UI_FILES ui/jdiff.ui)
-#QT4_MOC_FILES(MOC_FILES view.h dialog.h application.h)
+QT4_MOC_FILES(MOC_FILES dialog.h application.h)
 
 include_directories(${PROJECT_SOURCE_DIR})
 
 set(SOURCES
 main.cpp
+application.h
+application.cpp
+dialog.h
+dialog.cpp
 ${UI_FILES}
 ${MOC_FILES}
 )
