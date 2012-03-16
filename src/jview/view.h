@@ -40,8 +40,7 @@ private:
     QImage                  qtimage;
     float                   exposure;
     float                   gamma;
-    bool                    showNaN;
-    bool                    showNeg;
+    bool                    showInvalid;
 };
 
 #endif // _JVIEW_H_

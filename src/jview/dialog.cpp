@@ -4,14 +4,28 @@
 #include <QtGui/QMouseEvent>
 #include <QtCore/QUrl>
 #include <common/image.h>
+#include <QFileDialog>
+#include "application.h"
 
-JImageDialog::JImageDialog( QDialog *parent /*= 0*/ ) 
-	: QDialog(parent) {
+JImageWindow::JImageWindow( QDialog *parent /*= 0*/ ) 
+	: QMainWindow(parent) {
 	form.setupUi(this);
     setAcceptDrops(true);
 }
 
-void JImageDialog::loadImage(const string &filename, bool &isHDR) {
+void JImageWindow::openNewImage() {
+    QString folderName = QFileInfo(filename).absoluteDir().absolutePath();
+    QString fname = 
+    QFileDialog::getOpenFileName(this,
+                                 tr("Open Image"), 
+                                 folderName, 
+                                 tr("ALL Images (*.pfm *.exr *.tga *.png *.jpg *.jpeg *.bmp *.tiff);;"
+                                    "HDR Image Files (*.pfm *.exr *.tga);;" 
+                                    "LDR Images (*.png *.jpg *.jpeg *.bmp *.tiff)"));
+    static_cast<JImageApplication*>(qApp)->Open(fname);
+}
+
+void JImageWindow::loadImage(const string &filename, bool &isHDR) {
     string extension = filename.substr(filename.size() - 4);
     if (extension == ".exr") {
         image = loadExr(filename);
@@ -31,7 +45,7 @@ void JImageDialog::loadImage(const string &filename, bool &isHDR) {
     }
 }
 
-void JImageDialog::setImage( const QString &f ) {
+void JImageWindow::setImage( const QString &f ) {
 	filename = QFileInfo(f).fileName();
     bool isHDR = true;
     loadImage(f.toStdString(), isHDR);
@@ -51,36 +65,36 @@ void JImageDialog::setImage( const QString &f ) {
 }
 
 
-void JImageDialog::dragEnterEvent(QDragEnterEvent *event) {
+void JImageWindow::dragEnterEvent(QDragEnterEvent *event) {
     if (event->mimeData()->hasUrls())
         event->acceptProposedAction();
 }
 
-void JImageDialog::dropEvent(QDropEvent *event) {
+void JImageWindow::dropEvent(QDropEvent *event) {
     setImage(event->mimeData()->urls()[0].toLocalFile());
     event->acceptProposedAction();
     setFocus();
 }
 
-void JImageDialog::setExposureLabel( float exposure ) {
+void JImageWindow::setExposureLabel( float exposure ) {
     QString eStr;
     eStr.sprintf("%.2f", exposure);
     form.exposureLabel->setText(eStr);
 }
 
-void JImageDialog::setGammaLabel( float gamma ) {
+void JImageWindow::setGammaLabel( float gamma ) {
     QString gStr;
     gStr.sprintf("%.2f", gamma);
     form.gammaLabel->setText(gStr);
 }
 
-void JImageDialog::setScaleLabel( float scale ) {
+void JImageWindow::setScaleLabel( float scale ) {
     QString sStr;
     sStr.sprintf("%.3f", scale);
     form.scaleLabel->setText(sStr);
 }
 
-void JImageDialog::setCoordinateLabel( int x, int y ) {
+void JImageWindow::setCoordinateLabel( int x, int y ) {
     QString cStr;
     cStr.sprintf("[%4d, %4d]", x, y);
     form.coordinateLabel->setText(cStr);
@@ -93,7 +107,7 @@ void formatNumber(float v, QString &f) {
         f.sprintf("%9.4f", v);
 }
 
-void JImageDialog::setColorLabel( int x, int y ) {
+void JImageWindow::setColorLabel( int x, int y ) {
     QString str;
     if (x >= 0 && x < image.width() && y >= 0 && y < image.height()) {
         const vec3f &c = image.at(x, y);

@@ -4,10 +4,12 @@
 #include <QtGui/QMouseEvent>
 #include <common/func.h>
 #include <common/stdmath.h>
-#include "QtGui/qmessagebox.h"
+#include <QtGui/QMessageBox>
+#include "application.h"
+#include "dialog.h"
 
 JImageView::JImageView(QWidget* parent, Qt::WindowFlags f)
-    : QWidget(parent, f), mousePressed(false), offset(0, 0), scale(1.0f), exposure(0.0f), gamma(2.2f), showNaN(false), showNeg(false) {
+    : QWidget(parent, f), mousePressed(false), offset(0, 0), scale(1.0f), exposure(0.0f), gamma(2.2f), showInvalid(false) {
 }
 
 
@@ -54,9 +56,9 @@ void JImageView::update() {
     for (int j = 0; j < qtimage.height(); j++) {
         for (int i = 0; i < qtimage.width(); i++) {
             const vec3f &p = image->at(i, j);
-            if (showNaN && isanynan(p)) {
+            if (showInvalid && isanynan(p)) {
                 qtimage.setPixel(i, j, qRgb(255, 0, 0));
-            } else if (showNeg && isanyneg(p)){ 
+            } else if (showInvalid && isanyneg(p)){ 
                 qtimage.setPixel(i, j, qRgb(0, 255, 0));
             } else {
                 float scale = pow(2, exposure);
@@ -128,41 +130,44 @@ void JImageView::mouseMoveEvent( QMouseEvent *event )
 
 void JImageView::keyPressEvent( QKeyEvent *event )
 {
-    switch(event->key()) {
-        case Qt::Key_R: reset(); break;
-        case Qt::Key_1: setExposrueGamma(0.0f, 1.0f); break;
-        case Qt::Key_2: setExposrueGamma(0.0f, 2.2f); break;
-        case Qt::Key_BracketLeft: setExposure(exposure - 0.1f); break;
-        case Qt::Key_BracketRight: setExposure(exposure + 0.1f); break;
-        case Qt::Key_Minus: 
-        case Qt::Key_hyphen:
-            setScale(scale * 0.9f);
-            break;
-        case Qt::Key_Plus:
-        case Qt::Key_Equal: 
-            setScale(scale * 1.1f);
-            break;
-        case Qt::Key_Colon:
-        case Qt::Key_Semicolon:
-            setGamma(gamma - 0.1f);
-            break;
-        case Qt::Key_QuoteDbl:
-        case Qt::Key_Apostrophe:
-            setGamma(gamma + 0.1f);
-            break;
-        case Qt::Key_C:
-            center();
-            break;
-        case Qt::Key_N:
-            showNaN = !showNaN;
-            update();
-            break;
-        case Qt::Key_M:
-            showNeg = !showNeg;
-            update();
-            break;
-        default: 
-            QWidget::keyPressEvent(event); return;
+    if (event->matches(QKeySequence::Refresh)) {
+        reset();
+    } else if (event->matches(QKeySequence::Open)) {
+        static_cast<JImageWindow*>(parentWidget()->parentWidget())->openNewImage();
+    } else if (event->matches(QKeySequence::Close)) {
+        parentWidget()->close();
+    } else {
+        switch(event->key()) {
+            case Qt::Key_1: setExposrueGamma(0.0f, 1.0f); break;
+            case Qt::Key_2: setExposrueGamma(0.0f, 2.2f); break;
+            case Qt::Key_BracketLeft: setExposure(exposure - 0.1f); break;
+            case Qt::Key_BracketRight: setExposure(exposure + 0.1f); break;
+            case Qt::Key_Minus: 
+            case Qt::Key_hyphen:
+                setScale(scale * 0.9f);
+                break;
+            case Qt::Key_Plus:
+            case Qt::Key_Equal: 
+                setScale(scale * 1.1f);
+                break;
+            case Qt::Key_Colon:
+            case Qt::Key_Semicolon:
+                setGamma(gamma - 0.1f);
+                break;
+            case Qt::Key_QuoteDbl:
+            case Qt::Key_Apostrophe:
+                setGamma(gamma + 0.1f);
+                break;
+            case Qt::Key_C:
+                center();
+                break;
+            case Qt::Key_N:
+                showInvalid = !showInvalid;
+                update();
+                break;
+            default: 
+                QWidget::keyPressEvent(event); return;
+        }
     }
     event->accept();
 }

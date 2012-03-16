@@ -2,18 +2,19 @@
 #define APPLICATION_H__
 
 #include <QtGui/QApplication>
+#include <vector>
 
-class JImageDialog;
+class JImageWindow;
 class JImageApplication : public QApplication
 {
 	Q_OBJECT
 public:
 	JImageApplication(int &argc, char **argv);
-	void SetImageDialog(JImageDialog* dlg);
+	void Open(const QString &filename);
 protected:
 	bool event(QEvent *);
 private:
-	JImageDialog *dlg;
+    std::vector<JImageWindow*> windows;
 };
 
 

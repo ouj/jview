@@ -1,3 +1,6 @@
+#ifndef JIMAGE_DIALOG_H_
+#define JIMAGE_DIALOG_H_
+
 #include "ui_jview.h"
 #include <common/array.h>
 #include <common/pam.h>
@@ -7,12 +10,13 @@
 using std::vector;
 using std::string;
 
-class JImageDialog : public QDialog
+class JImageWindow : public QMainWindow
 {
 	Q_OBJECT
 public:
-	JImageDialog(QDialog *parent = 0);
+	JImageWindow(QDialog *parent = 0);
     void                    Init();
+    void                    openNewImage();
 	void					setImage(const QString &filename);
     void                    loadImage(const string &filename, bool &isHDR);
     void                    dragEnterEvent(QDragEnterEvent *event);
@@ -26,6 +30,8 @@ public slots:
 private:
 	sarray2<vec3f>			image;
 	QString					filename;
-	Ui::JImageDialogForm	form;
+	Ui::JViewMainWindow     form;
 };
+
+#endif //JIMAGE_DIALOG_H_
 

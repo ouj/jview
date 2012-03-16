@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'jview.ui'
 **
-** Created: Fri Sep 23 10:26:42 2011
-**      by: Qt User Interface Compiler version 4.7.0
+** Created: Fri Mar 16 11:15:08 2012
+**      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -14,22 +14,25 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
-#include <QtGui/QDialog>
 #include <QtGui/QGroupBox>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
+#include <QtGui/QMainWindow>
+#include <QtGui/QMenuBar>
 #include <QtGui/QSpacerItem>
+#include <QtGui/QStatusBar>
 #include <QtGui/QVBoxLayout>
+#include <QtGui/QWidget>
 #include "view.h"
 
 QT_BEGIN_NAMESPACE
 
-class Ui_JImageDialogForm
+class Ui_JViewMainWindow
 {
 public:
+    QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
-    JImageView *viewWidget;
     QGroupBox *groupBox;
     QVBoxLayout *verticalLayout_3;
     QHBoxLayout *horizontalLayout_2;
@@ -54,42 +57,31 @@ public:
     QLabel *label_4;
     QLabel *gammaLabel;
     QSpacerItem *horizontalSpacer;
+    JImageView *viewWidget;
+    QMenuBar *menubar;
+    QStatusBar *statusbar;
 
-    void setupUi(QDialog *JImageDialogForm)
+    void setupUi(QMainWindow *JViewMainWindow)
     {
-        if (JImageDialogForm->objectName().isEmpty())
-            JImageDialogForm->setObjectName(QString::fromUtf8("JImageDialogForm"));
-        JImageDialogForm->resize(515, 582);
-        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(JImageDialogForm->sizePolicy().hasHeightForWidth());
-        JImageDialogForm->setSizePolicy(sizePolicy);
-        JImageDialogForm->setSizeGripEnabled(true);
-        verticalLayout = new QVBoxLayout(JImageDialogForm);
-        verticalLayout->setSpacing(5);
+        if (JViewMainWindow->objectName().isEmpty())
+            JViewMainWindow->setObjectName(QString::fromUtf8("JViewMainWindow"));
+        JViewMainWindow->resize(707, 808);
+        JViewMainWindow->setCursor(QCursor(Qt::CrossCursor));
+        JViewMainWindow->setContextMenuPolicy(Qt::DefaultContextMenu);
+        centralwidget = new QWidget(JViewMainWindow);
+        centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
+        verticalLayout = new QVBoxLayout(centralwidget);
+        verticalLayout->setSpacing(0);
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 5);
-        viewWidget = new JImageView(JImageDialogForm);
-        viewWidget->setObjectName(QString::fromUtf8("viewWidget"));
-        sizePolicy.setHeightForWidth(viewWidget->sizePolicy().hasHeightForWidth());
-        viewWidget->setSizePolicy(sizePolicy);
-        viewWidget->setCursor(QCursor(Qt::CrossCursor));
-        viewWidget->setMouseTracking(true);
-        viewWidget->setFocusPolicy(Qt::WheelFocus);
-        viewWidget->setContextMenuPolicy(Qt::NoContextMenu);
-        viewWidget->setStyleSheet(QString::fromUtf8("background-color: black;"));
-
-        verticalLayout->addWidget(viewWidget);
-
-        groupBox = new QGroupBox(JImageDialogForm);
+        groupBox = new QGroupBox(centralwidget);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
         groupBox->setEnabled(true);
-        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Preferred);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
-        groupBox->setSizePolicy(sizePolicy1);
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
+        groupBox->setSizePolicy(sizePolicy);
         groupBox->setMinimumSize(QSize(461, 0));
         groupBox->setAlignment(Qt::AlignCenter);
         groupBox->setFlat(true);
@@ -209,42 +201,60 @@ public:
 
         verticalLayout->addWidget(groupBox);
 
+        viewWidget = new JImageView(centralwidget);
+        viewWidget->setObjectName(QString::fromUtf8("viewWidget"));
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(viewWidget->sizePolicy().hasHeightForWidth());
+        viewWidget->setSizePolicy(sizePolicy1);
+        viewWidget->setCursor(QCursor(Qt::CrossCursor));
+        viewWidget->setMouseTracking(true);
+        viewWidget->setFocusPolicy(Qt::WheelFocus);
+        viewWidget->setContextMenuPolicy(Qt::NoContextMenu);
+        viewWidget->setStyleSheet(QString::fromUtf8("background-color: black;"));
 
-        retranslateUi(JImageDialogForm);
-        QObject::connect(viewWidget, SIGNAL(exposureChanged(float)), JImageDialogForm, SLOT(setExposureLabel(float)));
-        QObject::connect(viewWidget, SIGNAL(gammaChanged(float)), JImageDialogForm, SLOT(setGammaLabel(float)));
-        QObject::connect(viewWidget, SIGNAL(scaleChanged(float)), JImageDialogForm, SLOT(setScaleLabel(float)));
-        QObject::connect(viewWidget, SIGNAL(coordinateChanged(int,int)), JImageDialogForm, SLOT(setCoordinateLabel(int,int)));
-        QObject::connect(viewWidget, SIGNAL(coordinateChanged(int,int)), JImageDialogForm, SLOT(setColorLabel(int,int)));
+        verticalLayout->addWidget(viewWidget);
 
-        QMetaObject::connectSlotsByName(JImageDialogForm);
+        JViewMainWindow->setCentralWidget(centralwidget);
+        menubar = new QMenuBar(JViewMainWindow);
+        menubar->setObjectName(QString::fromUtf8("menubar"));
+        menubar->setGeometry(QRect(0, 0, 707, 22));
+        JViewMainWindow->setMenuBar(menubar);
+        statusbar = new QStatusBar(JViewMainWindow);
+        statusbar->setObjectName(QString::fromUtf8("statusbar"));
+        JViewMainWindow->setStatusBar(statusbar);
+
+        retranslateUi(JViewMainWindow);
+
+        QMetaObject::connectSlotsByName(JViewMainWindow);
     } // setupUi
 
-    void retranslateUi(QDialog *JImageDialogForm)
+    void retranslateUi(QMainWindow *JViewMainWindow)
     {
-        JImageDialogForm->setWindowTitle(QApplication::translate("JImageDialogForm", "Jiawei's Image Viewer", 0, QApplication::UnicodeUTF8));
+        JViewMainWindow->setWindowTitle(QApplication::translate("JViewMainWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_WHATSTHIS
-        groupBox->setWhatsThis(QApplication::translate("JImageDialogForm", "Additional Image Options", 0, QApplication::UnicodeUTF8));
+        groupBox->setWhatsThis(QApplication::translate("JViewMainWindow", "Additional Image Options", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
         groupBox->setTitle(QString());
-        label_6->setText(QApplication::translate("JImageDialogForm", "coordinate:", 0, QApplication::UnicodeUTF8));
-        coordinateLabel->setText(QApplication::translate("JImageDialogForm", "[0,0]", 0, QApplication::UnicodeUTF8));
-        label_7->setText(QApplication::translate("JImageDialogForm", "value:", 0, QApplication::UnicodeUTF8));
-        colorLabel->setText(QApplication::translate("JImageDialogForm", "[-----, ----- ,-----]", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("JImageDialogForm", "size:", 0, QApplication::UnicodeUTF8));
-        sizeLabel->setText(QApplication::translate("JImageDialogForm", "(0,0)", 0, QApplication::UnicodeUTF8));
-        label_2->setText(QApplication::translate("JImageDialogForm", "scale:", 0, QApplication::UnicodeUTF8));
-        scaleLabel->setText(QApplication::translate("JImageDialogForm", "1.0", 0, QApplication::UnicodeUTF8));
-        label_3->setText(QApplication::translate("JImageDialogForm", "exposure:", 0, QApplication::UnicodeUTF8));
-        exposureLabel->setText(QApplication::translate("JImageDialogForm", "0.00", 0, QApplication::UnicodeUTF8));
-        label_4->setText(QApplication::translate("JImageDialogForm", "gamma:", 0, QApplication::UnicodeUTF8));
-        gammaLabel->setText(QApplication::translate("JImageDialogForm", "2.20", 0, QApplication::UnicodeUTF8));
+        label_6->setText(QApplication::translate("JViewMainWindow", "coordinate:", 0, QApplication::UnicodeUTF8));
+        coordinateLabel->setText(QApplication::translate("JViewMainWindow", "[0,0]", 0, QApplication::UnicodeUTF8));
+        label_7->setText(QApplication::translate("JViewMainWindow", "value:", 0, QApplication::UnicodeUTF8));
+        colorLabel->setText(QApplication::translate("JViewMainWindow", "[-----, ----- ,-----]", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("JViewMainWindow", "size:", 0, QApplication::UnicodeUTF8));
+        sizeLabel->setText(QApplication::translate("JViewMainWindow", "(0,0)", 0, QApplication::UnicodeUTF8));
+        label_2->setText(QApplication::translate("JViewMainWindow", "scale:", 0, QApplication::UnicodeUTF8));
+        scaleLabel->setText(QApplication::translate("JViewMainWindow", "1.0", 0, QApplication::UnicodeUTF8));
+        label_3->setText(QApplication::translate("JViewMainWindow", "exposure:", 0, QApplication::UnicodeUTF8));
+        exposureLabel->setText(QApplication::translate("JViewMainWindow", "0.00", 0, QApplication::UnicodeUTF8));
+        label_4->setText(QApplication::translate("JViewMainWindow", "gamma:", 0, QApplication::UnicodeUTF8));
+        gammaLabel->setText(QApplication::translate("JViewMainWindow", "2.20", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class JImageDialogForm: public Ui_JImageDialogForm {};
+    class JViewMainWindow: public Ui_JViewMainWindow {};
 } // namespace Ui
 
 QT_END_NAMESPACE
