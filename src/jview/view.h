@@ -19,6 +19,7 @@ public:
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent *evntKey);
+    const QImage& getImage() const { return qtimage; }
 signals:
     void gammaChanged(float gamma);
     void exposureChanged(float exposure);

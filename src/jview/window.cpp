@@ -81,7 +81,7 @@ void JImageWindow::saveLDRImage() {
                                  tr("ALL Images (*.pfm *.exr *.tga *.png *.jpg *.jpeg *.bmp *.tiff);;"
                                     "HDR Image Files (*.pfm *.exr *.tga);;" 
                                     "LDR Images (*.png *.jpg *.jpeg *.bmp *.tiff)"));
-    saveImage(fname.toStdString());
+    saveLdr(form.viewWidget->getImage(), fname.toStdString());
 }
 
 void JImageWindow::dragEnterEvent(QDragEnterEvent *event) {
