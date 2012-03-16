@@ -16,12 +16,14 @@ class JImageWindow : public QMainWindow
 public:
 	JImageWindow(QDialog *parent = 0);
     void                    Init();
-    void                    openNewImage();
 	void					setImage(const QString &filename);
     void                    loadImage(const string &filename, bool &isHDR);
+    void                    saveImage(const string &filename);
     void                    dragEnterEvent(QDragEnterEvent *event);
     void                    dropEvent(QDropEvent *event);
 public slots:
+    void                    openNewImage();
+    void                    saveLDRImage();
     void                    setExposureLabel(float exposure);
     void                    setGammaLabel(float gamma);
     void                    setScaleLabel(float scale);
@@ -30,6 +32,7 @@ public slots:
 private:
 	sarray2<vec3f>			image;
 	QString					filename;
+    QString					path;
 	Ui::JViewMainWindow     form;
 };
 

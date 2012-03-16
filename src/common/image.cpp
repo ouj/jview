@@ -1,5 +1,5 @@
 #include "image.h"
-
+#include <QtGui/QImage>
 #ifdef WIN32
 #define hypotf hypot // For the OpenEXR headers
 #endif
@@ -241,7 +241,6 @@ sarray2<vec3f> loadTga(const string &name) {
     return image;
 }
 
-#include <QtGui/QImage>
 sarray2<vec3f> loadLdr(const string &name) {
     QImage im;
     if (im.load(name.c_str())) {
@@ -263,4 +262,18 @@ sarray2<vec3f> loadLdr(const string &name) {
 
 
 
+void saveLdr(const sarray2<vec3f> &image, const string& filename) {
+    QImage im(image.width(), image.height(), QImage::Format_RGB32);
+    for (int j = 0; j < im.height(); j++) {
+        for (int i = 0; i < im.width(); i++) {
+            vec3f p = image.at(i,j);
+            QRgb rgb = qRgb(p.x*255, p.y*255, p.z*255);
+            im.setPixel(i, j, rgb);
+        }
+    }
+    im.save(filename.c_str());
+}
 
+void saveLdr(const QImage &image, const string& filename) {
+    image.save(filename.c_str());
+}

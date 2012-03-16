@@ -52,7 +52,6 @@ void JImageView::setScale( float nscale ) {
 void JImageView::update() {
     if (image == 0)
         return;
-
     for (int j = 0; j < qtimage.height(); j++) {
         for (int i = 0; i < qtimage.width(); i++) {
             const vec3f &p = image->at(i, j);
@@ -73,16 +72,14 @@ void JImageView::update() {
     repaint();
 }
 
-void JImageView::paintEvent( QPaintEvent * event )
-{
+void JImageView::paintEvent( QPaintEvent * event ) {
     QPainter painter(this);
     painter.translate(offset);
     painter.scale(scale, scale);
     painter.drawImage(0, 0, qtimage);
 }
 
-void JImageView::wheelEvent( QWheelEvent * event )
-{
+void JImageView::wheelEvent( QWheelEvent * event ) {
     if(event->modifiers() == Qt::NoModifier) {
         setScale(scale * (1 + (double)event->delta() / 600));
         return;
@@ -101,22 +98,18 @@ void JImageView::wheelEvent( QWheelEvent * event )
     update();
 }
 
-void JImageView::mousePressEvent( QMouseEvent *event )
-{
+void JImageView::mousePressEvent( QMouseEvent *event ) {
     mousePressed = true;
     mousePt = event->globalPos();
 }
 
-void JImageView::mouseReleaseEvent( QMouseEvent *event )
-{
+void JImageView::mouseReleaseEvent( QMouseEvent *event ) {
     if (mousePressed == true)
         mousePressed = false;
 }
 
-void JImageView::mouseMoveEvent( QMouseEvent *event )
-{
-    if (mousePressed == true)
-    {
+void JImageView::mouseMoveEvent( QMouseEvent *event ) {
+    if (mousePressed == true) {
         QPoint delta = event->globalPos() - mousePt;
         mousePt = event->globalPos();
 
@@ -128,60 +121,48 @@ void JImageView::mouseMoveEvent( QMouseEvent *event )
     coordinateChanged(imgPos.x(), imgPos.y());
 }
 
-void JImageView::keyPressEvent( QKeyEvent *event )
-{
-    if (event->matches(QKeySequence::Refresh)) {
-        reset();
-    } else if (event->matches(QKeySequence::Open)) {
-        static_cast<JImageWindow*>(qApp->activeWindow())->openNewImage();
-    } else if (event->matches(QKeySequence::Close)) {
-        qApp->activeWindow()->close();
-    } else {
-        switch(event->key()) {
-            case Qt::Key_1: setExposrueGamma(0.0f, 1.0f); break;
-            case Qt::Key_2: setExposrueGamma(0.0f, 2.2f); break;
-            case Qt::Key_BracketLeft: setExposure(exposure - 0.1f); break;
-            case Qt::Key_BracketRight: setExposure(exposure + 0.1f); break;
-            case Qt::Key_Minus: 
-            case Qt::Key_hyphen:
-                setScale(scale * 0.9f);
-                break;
-            case Qt::Key_Plus:
-            case Qt::Key_Equal: 
-                setScale(scale * 1.1f);
-                break;
-            case Qt::Key_Colon:
-            case Qt::Key_Semicolon:
-                setGamma(gamma - 0.1f);
-                break;
-            case Qt::Key_QuoteDbl:
-            case Qt::Key_Apostrophe:
-                setGamma(gamma + 0.1f);
-                break;
-            case Qt::Key_C:
-                center();
-                break;
-            case Qt::Key_N:
-                showInvalid = !showInvalid;
-                update();
-                break;
-            default: 
-                QWidget::keyPressEvent(event); return;
-        }
+void JImageView::keyPressEvent( QKeyEvent *event ) {
+    switch(event->key()) {
+        case Qt::Key_1: setExposrueGamma(0.0f, 1.0f); break;
+        case Qt::Key_2: setExposrueGamma(0.0f, 2.2f); break;
+        case Qt::Key_BracketLeft: setExposure(exposure - 0.1f); break;
+        case Qt::Key_BracketRight: setExposure(exposure + 0.1f); break;
+        case Qt::Key_Minus: 
+        case Qt::Key_hyphen:
+            setScale(scale * 0.9f);
+            break;
+        case Qt::Key_Plus:
+        case Qt::Key_Equal: 
+            setScale(scale * 1.1f);
+            break;
+        case Qt::Key_Colon:
+        case Qt::Key_Semicolon:
+            setGamma(gamma - 0.1f);
+            break;
+        case Qt::Key_QuoteDbl:
+        case Qt::Key_Apostrophe:
+            setGamma(gamma + 0.1f);
+            break;
+        case Qt::Key_C:
+            center();
+            break;
+        case Qt::Key_N:
+            showInvalid = !showInvalid;
+            update();
+            break;
+        default: 
+            QWidget::keyPressEvent(event); return;
     }
     event->accept();
 }
 
-void JImageView::reset()
-{
-    //setExposrueGamma(0.0f, 2.2f);
+void JImageView::reset() {
     setScale(1.0f);
     center();
     update();
 }
 
-void JImageView::setExposrueGamma( float exposure, float gamma )
-{
+void JImageView::setExposrueGamma( float exposure, float gamma ) {
     this->gamma = gamma;
     gammaChanged(this->gamma);
     this->exposure = exposure;
@@ -189,8 +170,7 @@ void JImageView::setExposrueGamma( float exposure, float gamma )
     update();
 }
 
-void JImageView::center()
-{
+void JImageView::center() {
     QPoint imgSize(qtimage.width(), qtimage.height());
     QPoint viewSize(width(), height());
     offset = (viewSize - imgSize * scale) * 0.5f;

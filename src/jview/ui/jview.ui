@@ -333,9 +333,15 @@
     <addaction name="actionSave"/>
     <addaction name="separator"/>
     <addaction name="actionClose"/>
-    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="actionReset"/>
    </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuView"/>
   </widget>
   <action name="actionOpen">
    <property name="text">
@@ -345,7 +351,7 @@
     <string>Open an image</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+N</string>
+    <string>Ctrl+O</string>
    </property>
   </action>
   <action name="actionSave">
@@ -370,15 +376,15 @@
     <string>Ctrl+W</string>
    </property>
   </action>
-  <action name="actionQuit">
+  <action name="actionReset">
    <property name="text">
-    <string>Quit</string>
+    <string>Reset</string>
    </property>
    <property name="toolTip">
-    <string>Quit Applicatioin</string>
+    <string>Reset Image</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Q</string>
+    <string>Ctrl+R</string>
    </property>
   </action>
  </widget>
@@ -393,6 +399,7 @@
     <signal>exposureChanged(float)</signal>
     <signal>scaleChanged(float)</signal>
     <signal>coordinateChanged(int,int)</signal>
+    <slot>reset()</slot>
    </slots>
   </customwidget>
  </customwidgets>
@@ -409,8 +416,8 @@
      <y>243</y>
     </hint>
     <hint type="destinationlabel">
-     <x>522</x>
-     <y>-16</y>
+     <x>511</x>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
@@ -426,7 +433,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>193</x>
-     <y>-11</y>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
@@ -442,7 +449,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>124</x>
-     <y>-2</y>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
@@ -457,8 +464,8 @@
      <y>423</y>
     </hint>
     <hint type="destinationlabel">
-     <x>637</x>
-     <y>-4</y>
+     <x>511</x>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
@@ -474,7 +481,71 @@
     </hint>
     <hint type="destinationlabel">
      <x>490</x>
-     <y>-9</y>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionOpen</sender>
+   <signal>triggered()</signal>
+   <receiver>JViewMainWindow</receiver>
+   <slot>openNewImage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>255</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionClose</sender>
+   <signal>triggered()</signal>
+   <receiver>JViewMainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>255</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionReset</sender>
+   <signal>triggered()</signal>
+   <receiver>viewWidget</receiver>
+   <slot>reset()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>255</x>
+     <y>343</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSave</sender>
+   <signal>triggered()</signal>
+   <receiver>JViewMainWindow</receiver>
+   <slot>saveLDRImage()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>255</x>
+     <y>299</y>
     </hint>
    </hints>
   </connection>
@@ -485,5 +556,7 @@
   <slot>setScaleLabel(float)</slot>
   <slot>setExposureLabel(float)</slot>
   <slot>setGammaLabel(float)</slot>
+  <slot>openNewImage()</slot>
+  <slot>saveLDRImage()</slot>
  </slots>
 </ui>

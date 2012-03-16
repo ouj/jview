@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'jview.ui'
 **
-** Created: Fri Mar 16 11:51:13 2012
+** Created: Fri Mar 16 12:52:21 2012
 **      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -34,7 +34,7 @@ public:
     QAction *actionOpen;
     QAction *actionSave;
     QAction *actionClose;
-    QAction *actionQuit;
+    QAction *actionReset;
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
     QGroupBox *groupBox;
@@ -64,6 +64,7 @@ public:
     JImageView *viewWidget;
     QMenuBar *menubar;
     QMenu *menuFile;
+    QMenu *menuView;
 
     void setupUi(QMainWindow *JViewMainWindow)
     {
@@ -78,8 +79,8 @@ public:
         actionSave->setObjectName(QString::fromUtf8("actionSave"));
         actionClose = new QAction(JViewMainWindow);
         actionClose->setObjectName(QString::fromUtf8("actionClose"));
-        actionQuit = new QAction(JViewMainWindow);
-        actionQuit->setObjectName(QString::fromUtf8("actionQuit"));
+        actionReset = new QAction(JViewMainWindow);
+        actionReset->setObjectName(QString::fromUtf8("actionReset"));
         centralwidget = new QWidget(JViewMainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         verticalLayout = new QVBoxLayout(centralwidget);
@@ -233,14 +234,17 @@ public:
         menubar->setGeometry(QRect(0, 0, 512, 22));
         menuFile = new QMenu(menubar);
         menuFile->setObjectName(QString::fromUtf8("menuFile"));
+        menuView = new QMenu(menubar);
+        menuView->setObjectName(QString::fromUtf8("menuView"));
         JViewMainWindow->setMenuBar(menubar);
 
         menubar->addAction(menuFile->menuAction());
+        menubar->addAction(menuView->menuAction());
         menuFile->addAction(actionOpen);
         menuFile->addAction(actionSave);
         menuFile->addSeparator();
         menuFile->addAction(actionClose);
-        menuFile->addAction(actionQuit);
+        menuView->addAction(actionReset);
 
         retranslateUi(JViewMainWindow);
         QObject::connect(viewWidget, SIGNAL(coordinateChanged(int,int)), JViewMainWindow, SLOT(setCoordinateLabel(int,int)));
@@ -248,6 +252,10 @@ public:
         QObject::connect(viewWidget, SIGNAL(exposureChanged(float)), JViewMainWindow, SLOT(setExposureLabel(float)));
         QObject::connect(viewWidget, SIGNAL(gammaChanged(float)), JViewMainWindow, SLOT(setGammaLabel(float)));
         QObject::connect(viewWidget, SIGNAL(scaleChanged(float)), JViewMainWindow, SLOT(setScaleLabel(float)));
+        QObject::connect(actionOpen, SIGNAL(triggered()), JViewMainWindow, SLOT(openNewImage()));
+        QObject::connect(actionClose, SIGNAL(triggered()), JViewMainWindow, SLOT(close()));
+        QObject::connect(actionReset, SIGNAL(triggered()), viewWidget, SLOT(reset()));
+        QObject::connect(actionSave, SIGNAL(triggered()), JViewMainWindow, SLOT(saveLDRImage()));
 
         QMetaObject::connectSlotsByName(JViewMainWindow);
     } // setupUi
@@ -259,7 +267,7 @@ public:
 #ifndef QT_NO_TOOLTIP
         actionOpen->setToolTip(QApplication::translate("JViewMainWindow", "Open an image", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
-        actionOpen->setShortcut(QApplication::translate("JViewMainWindow", "Ctrl+N", 0, QApplication::UnicodeUTF8));
+        actionOpen->setShortcut(QApplication::translate("JViewMainWindow", "Ctrl+O", 0, QApplication::UnicodeUTF8));
         actionSave->setText(QApplication::translate("JViewMainWindow", "&Save LDR", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         actionSave->setToolTip(QApplication::translate("JViewMainWindow", "Save LDR image", 0, QApplication::UnicodeUTF8));
@@ -270,11 +278,11 @@ public:
         actionClose->setToolTip(QApplication::translate("JViewMainWindow", "Close Window", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         actionClose->setShortcut(QApplication::translate("JViewMainWindow", "Ctrl+W", 0, QApplication::UnicodeUTF8));
-        actionQuit->setText(QApplication::translate("JViewMainWindow", "Quit", 0, QApplication::UnicodeUTF8));
+        actionReset->setText(QApplication::translate("JViewMainWindow", "Reset", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
-        actionQuit->setToolTip(QApplication::translate("JViewMainWindow", "Quit Applicatioin", 0, QApplication::UnicodeUTF8));
+        actionReset->setToolTip(QApplication::translate("JViewMainWindow", "Reset Image", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
-        actionQuit->setShortcut(QApplication::translate("JViewMainWindow", "Ctrl+Q", 0, QApplication::UnicodeUTF8));
+        actionReset->setShortcut(QApplication::translate("JViewMainWindow", "Ctrl+R", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_WHATSTHIS
         groupBox->setWhatsThis(QApplication::translate("JViewMainWindow", "Additional Image Options", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
@@ -292,6 +300,7 @@ public:
         label_4->setText(QApplication::translate("JViewMainWindow", "gamma:", 0, QApplication::UnicodeUTF8));
         gammaLabel->setText(QApplication::translate("JViewMainWindow", "2.20", 0, QApplication::UnicodeUTF8));
         menuFile->setTitle(QApplication::translate("JViewMainWindow", "File", 0, QApplication::UnicodeUTF8));
+        menuView->setTitle(QApplication::translate("JViewMainWindow", "View", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

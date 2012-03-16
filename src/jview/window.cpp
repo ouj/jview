@@ -14,7 +14,7 @@ JImageWindow::JImageWindow( QDialog *parent /*= 0*/ )
 }
 
 void JImageWindow::openNewImage() {
-    QString folderName = QFileInfo(filename).absoluteDir().absolutePath();
+    QString folderName = QFileInfo(path).absoluteDir().absolutePath();
     QString fname = 
     QFileDialog::getOpenFileName(this,
                                  tr("Open Image"), 
@@ -23,7 +23,7 @@ void JImageWindow::openNewImage() {
                                     "HDR Image Files (*.pfm *.exr *.tga);;" 
                                     "LDR Images (*.png *.jpg *.jpeg *.bmp *.tiff)"));
     if (QFile::exists(fname)) {
-        static_cast<JImageApplication*>(qApp)->Open(fname);
+        static_cast<JImageApplication*>(qApp)->open(fname);
     }
 }
 
@@ -48,6 +48,7 @@ void JImageWindow::loadImage(const string &filename, bool &isHDR) {
 }
 
 void JImageWindow::setImage( const QString &f ) {
+    path = f;
 	filename = QFileInfo(f).fileName();
     bool isHDR = true;
     loadImage(f.toStdString(), isHDR);
@@ -66,6 +67,22 @@ void JImageWindow::setImage( const QString &f ) {
     form.sizeLabel->setText(sizeStr);
 }
 
+
+void JImageWindow::saveImage(const string &fname) {
+    
+}
+
+void JImageWindow::saveLDRImage() {
+    QString folderName = QFileInfo(path).absoluteDir().absolutePath();
+    QString fname = 
+    QFileDialog::getSaveFileName(this,
+                                 tr("Save LDR Image"), 
+                                 folderName, 
+                                 tr("ALL Images (*.pfm *.exr *.tga *.png *.jpg *.jpeg *.bmp *.tiff);;"
+                                    "HDR Image Files (*.pfm *.exr *.tga);;" 
+                                    "LDR Images (*.png *.jpg *.jpeg *.bmp *.tiff)"));
+    saveImage(fname.toStdString());
+}
 
 void JImageWindow::dragEnterEvent(QDragEnterEvent *event) {
     if (event->mimeData()->hasUrls())
