@@ -4,7 +4,7 @@
 #include <QtGui/QMouseEvent>
 #include <QtCore/QUrl>
 #include <common/image.h>
-#include <QFileDialog>
+#include <QtGui/QFileDialog>
 #include "application.h"
 
 JImageWindow::JImageWindow( QDialog *parent /*= 0*/ ) 
