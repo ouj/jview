@@ -18,12 +18,12 @@ public:
     void                    Init();
 	void					setImage(const QString &filename);
     void                    loadImage(const string &filename, bool &isHDR);
-    void                    saveImage(const string &filename);
     void                    dragEnterEvent(QDragEnterEvent *event);
     void                    dropEvent(QDropEvent *event);
 public slots:
     void                    openNewImage();
     void                    saveLDRImage();
+    void                    saveHDRImage();
     void                    setExposureLabel(float exposure);
     void                    setGammaLabel(float gamma);
     void                    setScaleLabel(float scale);

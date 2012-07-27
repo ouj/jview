@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'jview.ui'
 **
-** Created: Fri Mar 16 12:52:21 2012
-**      by: Qt User Interface Compiler version 4.8.0
+** Created: Fri Jul 27 16:05:19 2012
+**      by: Qt User Interface Compiler version 4.8.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -35,6 +35,7 @@ public:
     QAction *actionSave;
     QAction *actionClose;
     QAction *actionReset;
+    QAction *actionSave_HDR;
     QWidget *centralwidget;
     QVBoxLayout *verticalLayout;
     QGroupBox *groupBox;
@@ -81,6 +82,8 @@ public:
         actionClose->setObjectName(QString::fromUtf8("actionClose"));
         actionReset = new QAction(JViewMainWindow);
         actionReset->setObjectName(QString::fromUtf8("actionReset"));
+        actionSave_HDR = new QAction(JViewMainWindow);
+        actionSave_HDR->setObjectName(QString::fromUtf8("actionSave_HDR"));
         centralwidget = new QWidget(JViewMainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         verticalLayout = new QVBoxLayout(centralwidget);
@@ -242,6 +245,7 @@ public:
         menubar->addAction(menuView->menuAction());
         menuFile->addAction(actionOpen);
         menuFile->addAction(actionSave);
+        menuFile->addAction(actionSave_HDR);
         menuFile->addSeparator();
         menuFile->addAction(actionClose);
         menuView->addAction(actionReset);
@@ -256,6 +260,7 @@ public:
         QObject::connect(actionClose, SIGNAL(triggered()), JViewMainWindow, SLOT(close()));
         QObject::connect(actionReset, SIGNAL(triggered()), viewWidget, SLOT(reset()));
         QObject::connect(actionSave, SIGNAL(triggered()), JViewMainWindow, SLOT(saveLDRImage()));
+        QObject::connect(actionSave_HDR, SIGNAL(triggered()), JViewMainWindow, SLOT(saveHDRImage()));
 
         QMetaObject::connectSlotsByName(JViewMainWindow);
     } // setupUi
@@ -283,6 +288,8 @@ public:
         actionReset->setToolTip(QApplication::translate("JViewMainWindow", "Reset Image", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         actionReset->setShortcut(QApplication::translate("JViewMainWindow", "Ctrl+R", 0, QApplication::UnicodeUTF8));
+        actionSave_HDR->setText(QApplication::translate("JViewMainWindow", "Save HDR", 0, QApplication::UnicodeUTF8));
+        actionSave_HDR->setShortcut(QApplication::translate("JViewMainWindow", "Ctrl+Shift+S", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_WHATSTHIS
         groupBox->setWhatsThis(QApplication::translate("JViewMainWindow", "Additional Image Options", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS

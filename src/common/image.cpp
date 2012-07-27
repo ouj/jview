@@ -1,4 +1,6 @@
 #include "image.h"
+#include <common/pam.h>
+#include <common/stddir.h>
 #include <QtGui/QImage>
 #ifdef WIN32
 #define hypotf hypot // For the OpenEXR headers
@@ -277,3 +279,8 @@ void saveLdr(const sarray2<vec3f> &image, const string& filename) {
 void saveLdr(const QImage &image, const string& filename) {
     image.save(filename.c_str());
 }
+
+void saveHdr(const sarray2<vec3f> &image, const string& filename) {
+    savePfm(filename, image);
+}
+

@@ -68,8 +68,14 @@ void JImageWindow::setImage( const QString &f ) {
 }
 
 
-void JImageWindow::saveImage(const string &fname) {
-    
+void JImageWindow::saveHDRImage() {
+    QString folderName = QFileInfo(path).absoluteDir().absolutePath();
+    QString fname =
+    QFileDialog::getSaveFileName(this,
+                                 tr("Save HDR Image"),
+                                 folderName,
+                                 tr("HDR Images (*.pfm *.exr)"));
+    saveHdr(image, fname.toStdString());
 }
 
 void JImageWindow::saveLDRImage() {

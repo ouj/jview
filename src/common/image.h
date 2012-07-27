@@ -12,6 +12,7 @@ sarray2<vec3f> loadExr(const string &name);
 sarray2<vec3f> loadTga(const string &name);
 sarray2<vec3f> loadLdr(const string &name);
 void saveLdr(const sarray2<vec3f> &image, const string& filename);
+void saveHdr(const sarray2<vec3f> &image, const string& filename);
 void saveLdr(const QImage &image, const string& filename);
 
 #endif //_JVIEW_IMAGE_H_
