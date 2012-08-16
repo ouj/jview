@@ -26,7 +26,9 @@ void loadPnm(const string& filename, rawtype& type,
 	else if ("P6"  == id) { nc = 3; ascii = false; type = 'B'; }
 	else {	error("unknown image format"); }
     
-	error_if_not_va(fscanf(f, "%d%d", &width, &height) == 2, "error reading image file %s", filename.c_str());
+	error_if_not_va(fscanf(f, "%d%d\n", &width, &height) == 2,
+                    "error reading image file %s, width: %d, height: %d",
+                    filename.c_str(), width, height);
     if(type == 'B') { 
         buffer = (rawbuffer)(new unsigned char[width*height*nc]); 
         int maxv;
