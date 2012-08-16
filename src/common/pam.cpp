@@ -26,16 +26,19 @@ void loadPnm(const string& filename, rawtype& type,
 	else if ("P6"  == id) { nc = 3; ascii = false; type = 'B'; }
 	else {	error("unknown image format"); }
     
-	error_if_not_va(fscanf(f, "%d%d\n", &width, &height) == 2, "error reading image file %s", filename.c_str());
+	error_if_not_va(fscanf(f, "%d%d", &width, &height) == 2, "error reading image file %s", filename.c_str());
     if(type == 'B') { 
         buffer = (rawbuffer)(new unsigned char[width*height*nc]); 
         int maxv;
-        error_if_not_va(fscanf(f, "%d\n", &maxv) == 1, "error reading image file %s", filename.c_str());
+        error_if_not_va(fscanf(f, "%d", &maxv) == 1, "error reading image file %s", filename.c_str());
+        getc(f); //each the \n character.
         error_if_not(maxv == 255, "unsupported max value");
         scale = 1.0f / maxv;
         if(!ascii) {
             int bread = (int)fread(buffer, sizeof(unsigned char), width*height*nc, f);
-            error_if_not_va(bread == width*height*nc, "error reading image file %s", filename.c_str());
+            warning_if_not_va(bread == width*height*nc,
+                            "error reading image file %s, loaded(%d), expected(%d)",
+                            filename.c_str(), bread, width*height*nc);
         } else {
             unsigned char* buf = (unsigned char*)buffer;
             for(int i = 0; i < width*height*nc; i ++) {
