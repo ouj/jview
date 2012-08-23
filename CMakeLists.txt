@@ -4,10 +4,6 @@ cmake_minimum_required(VERSION 2.8)
 option(BUILD_VERBOSE "verbose makefile build" OFF)
 option(BUILD_NEWGCC "use a new version of GCC" OFF)
 
-if(BUILD_NEWGCC)
-    set(CMAKE_C_COMPILER "gcc-mp-4.6")
-    set(CMAKE_CXX_COMPILER "c++-mp-4.6")
-endif()
 
 # main project name defined
 project(jview)

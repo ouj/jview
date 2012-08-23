@@ -1,5 +1,5 @@
 #include "view.h"
-#include <QtGui/Qpainter>
+#include <QtGui/QPainter>
 #include <QtGui/QWheelEvent>
 #include <QtGui/QMouseEvent>
 #include <common/func.h>
