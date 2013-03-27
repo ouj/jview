@@ -24,6 +24,7 @@ double JImageView::computeExposure(const sarray2<vec3f> *image) {
     for (int j = 0; j < image->height(); j++) {
         for (int i = 0; i < image->width(); i++) {
             const vec3f &p = image->at(i, j);
+            if (isanyinvalid(p)) continue;
             float m = average(p);
             mean += m / (float)image->size();
         }
