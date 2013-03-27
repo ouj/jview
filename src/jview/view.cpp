@@ -7,6 +7,7 @@
 #include <QtGui/QMessageBox>
 #include "application.h"
 #include "window.h"
+#include <QtGui/QMessageBox>
 
 JImageView::JImageView(QWidget* parent, Qt::WindowFlags f)
     : QWidget(parent, f), mousePressed(false), 
@@ -18,13 +19,26 @@ JImageView::JImageView(QWidget* parent, Qt::WindowFlags f)
 JImageView::~JImageView(void) {
 }
 
+double JImageView::computeExposure(const sarray2<vec3f> *image) {
+    double mean = 0.0f;
+    for (int j = 0; j < image->height(); j++) {
+        for (int i = 0; i < image->width(); i++) {
+            const vec3f &p = image->at(i, j);
+            float m = average(p);
+            mean += m / (float)image->size();
+        }
+    }
+    return log(0.18 / mean) / log(2.0); // middle gray is 0.18
+}
+
 void JImageView::setImage( const sarray2<vec3f> *image ) {
     this->image = image;
     qtimage = QImage(image->width(), image->height(), QImage::Format_RGB32);
-    update();
-    qApp->activeWindow()->resize(image->width(), image->height() + 70);
+    float exposure = computeExposure(image);
+    setExposrueGamma(exposure, gamma);
     activateWindow();
     setFocus();
+    qApp->activeWindow()->resize(image->width(), image->height() + 70);
     center();
 }
 
@@ -50,8 +64,7 @@ void JImageView::setScale( float nscale ) {
 }
 
 void JImageView::update() {
-    if (image == 0)
-        return;
+    if (image == 0) return;
     for (int j = 0; j < qtimage.height(); j++) {
         for (int i = 0; i < qtimage.width(); i++) {
             const vec3f &p = image->at(i, j);
