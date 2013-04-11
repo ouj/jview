@@ -29,7 +29,7 @@ public slots:
     void setGamma(float gamma);
     void setExposure(float exposure);
     void reset();
-    void setExposrueGamma( float e, float g );
+    void setExposureGamma( float e, float g );
     double computeExposure(const sarray2<vec3f> *image);
     void setScale( float scale );
     void center();

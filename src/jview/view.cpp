@@ -36,7 +36,7 @@ void JImageView::setImage( const sarray2<vec3f> *image ) {
     this->image = image;
     qtimage = QImage(image->width(), image->height(), QImage::Format_RGB32);
     float exposure = computeExposure(image);
-    setExposrueGamma(exposure, gamma);
+    setExposureGamma(exposure, gamma);
     activateWindow();
     setFocus();
     qApp->activeWindow()->resize(image->width(), image->height() + 70);
@@ -137,10 +137,14 @@ void JImageView::mouseMoveEvent( QMouseEvent *event ) {
 
 void JImageView::keyPressEvent( QKeyEvent *event ) {
     switch(event->key()) {
-        case Qt::Key_1: setExposrueGamma(0.0f, 1.0f); break;
-        case Qt::Key_2: setExposrueGamma(0.0f, 2.2f); break;
-        case Qt::Key_BracketLeft: setExposure(exposure - 0.1f); break;
-        case Qt::Key_BracketRight: setExposure(exposure + 0.1f); break;
+        case Qt::Key_1: setExposureGamma(0.0f, 1.0f); break;
+        case Qt::Key_2: setExposureGamma(0.0f, 2.2f); break;
+        case Qt::Key_BracketLeft:
+            if (event->modifiers() & Qt::ShiftModifier) setExposure(exposure - 1.0f);
+            else setExposure(exposure - 0.1f); break;
+        case Qt::Key_BracketRight:
+            if (event->modifiers() & Qt::ShiftModifier) setExposure(exposure + 1.0f);
+            else setExposure(exposure + 0.1f); break;
         case Qt::Key_Minus: 
         case Qt::Key_hyphen:
             setScale(scale * 0.9f);
@@ -151,11 +155,13 @@ void JImageView::keyPressEvent( QKeyEvent *event ) {
             break;
         case Qt::Key_Colon:
         case Qt::Key_Semicolon:
-            setGamma(gamma - 0.1f);
+            if (event->modifiers() & Qt::ShiftModifier) setGamma(gamma - 1.0f);
+            else setGamma(gamma - 0.1f);
             break;
         case Qt::Key_QuoteDbl:
         case Qt::Key_Apostrophe:
-            setGamma(gamma + 0.1f);
+            if (event->modifiers() & Qt::ShiftModifier) setGamma(gamma + 1.0f);
+            else setGamma(gamma + 0.1f);
             break;
         case Qt::Key_C:
             center();
@@ -176,7 +182,7 @@ void JImageView::reset() {
     update();
 }
 
-void JImageView::setExposrueGamma( float exposure, float gamma ) {
+void JImageView::setExposureGamma( float exposure, float gamma ) {
     this->gamma = gamma;
     gammaChanged(this->gamma);
     this->exposure = exposure;

@@ -54,7 +54,7 @@ void JImageWindow::setImage( const QString &f ) {
     loadImage(f.toStdString(), isHDR);
 	form.viewWidget->setImage(&image);
     if (!isHDR) {
-        form.viewWidget->setExposrueGamma(0.0f, 1.0f);
+        form.viewWidget->setExposureGamma(0.0f, 1.0f);
     }
     setWindowTitle(f);
 
