@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 2.8)
 
 # options
 option(BUILD_VERBOSE "verbose makefile build" OFF)
-option(BUILD_NEWGCC "use a new version of GCC" OFF)
 
 
 # main project name defined
@@ -46,18 +45,14 @@ include_directories(/usr/local/include)
 
 # compiler flags
 if(MAKEFILES)
-    if(NOT BUILD_NEWGCC)
-        add_definitions(-O3)
-        add_definitions(-mfpmath=sse)
-        add_definitions(-funroll-loops)
-        add_definitions(-ftree-vectorize)
+    add_definitions(-O3)
+    add_definitions(-mfpmath=sse)
+    add_definitions(-funroll-loops)
+    add_definitions(-ftree-vectorize)
     
-        add_definitions(-funsafe-loop-optimizations)
-        add_definitions(-fstrict-aliasing)
-        add_definitions(-ffast-math)
-    else()
-        add_definitions(-Ofast)
-    endif()
+    add_definitions(-funsafe-loop-optimizations)
+    add_definitions(-fstrict-aliasing)
+    add_definitions(-ffast-math)
 endif()
 
 if(WIN32)
