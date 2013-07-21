@@ -39,22 +39,6 @@ GET_FILENAME_COMPONENT(COMMON_PATH "${NEAR_PATH}/common" ABSOLUTE)
 include_directories(${PROJECT_SOURCE_DIR}/src)
 include_directories(/usr/local/include)
 
-#library directories
-#link_directories(/homebrew/lib)
-#link_directories(/usr/local/lib)
-
-# compiler flags
-if(MAKEFILES)
-    add_definitions(-O3)
-    add_definitions(-mfpmath=sse)
-    add_definitions(-funroll-loops)
-    add_definitions(-ftree-vectorize)
-    
-    add_definitions(-funsafe-loop-optimizations)
-    add_definitions(-fstrict-aliasing)
-    add_definitions(-ffast-math)
-endif()
-
 if(WIN32)
     add_definitions(-DNOMINMAX)
 endif()

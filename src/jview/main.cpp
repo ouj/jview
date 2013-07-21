@@ -14,11 +14,9 @@ using std::vector;
 int main(int argc, char** argv)
 {
 	JImageApplication app(argc, argv);
-#ifdef WIN32
-	JImageDialog *dlg = new JImageDialog();
-    dlg->show();
+#ifndef APPLE
     if(argc >= 2)
-        dlg->setImage(argv[1]);
+        app.open(argv[1], true);
 #endif // APPLE
 	return app.exec();
 }

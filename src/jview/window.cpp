@@ -7,24 +7,14 @@
 #include <QtGui/QFileDialog>
 #include "application.h"
 
-JImageWindow::JImageWindow( QDialog *parent /*= 0*/ ) 
+JImageWindow::JImageWindow( QDialog *parent /*= 0*/ )
 	: QMainWindow(parent) {
 	form.setupUi(this);
     setAcceptDrops(true);
 }
 
 void JImageWindow::openNewImage() {
-    QString folderName = QFileInfo(path).absoluteDir().absolutePath();
-    QString fname = 
-    QFileDialog::getOpenFileName(this,
-                                 tr("Open Image"), 
-                                 folderName, 
-                                 tr("ALL Images (*.pfm *.exr *.tga *.png *.jpg *.jpeg *.bmp *.tiff);;"
-                                    "HDR Image Files (*.pfm *.exr *.tga);;" 
-                                    "LDR Images (*.png *.jpg *.jpeg *.bmp *.tiff)"));
-    if (QFile::exists(fname)) {
-        static_cast<JImageApplication*>(qApp)->open(fname);
-    }
+    static_cast<JImageApplication*>(qApp)->openNewImage();
 }
 
 void JImageWindow::loadImage(const string &filename, bool &isHDR) {
@@ -40,7 +30,7 @@ void JImageWindow::loadImage(const string &filename, bool &isHDR) {
         isHDR = false;
     } else if (extension == ".pfm") {
         image = loadPnm3f(filename);
-        isHDR = true;  
+        isHDR = true;
     } else {
         image = loadLdr(filename);
         isHDR = false;
@@ -58,10 +48,12 @@ void JImageWindow::setImage( const QString &f ) {
     }
     setWindowTitle(f);
 
-    int x = image.width();
-    int y = image.height();
+	//resize window and center image.
+	this->resize(image.width(), image.height() + 100);
+    form.viewWidget->center();
+
     QString sizeStr;
-    sizeStr.sprintf("(%4d, %4d)", x, y);
+    sizeStr.sprintf("(%4d, %4d)", image.width(), image.height());
     form.sizeLabel->setText(sizeStr);
 }
 
@@ -78,10 +70,10 @@ void JImageWindow::saveHDRImage() {
 
 void JImageWindow::saveLDRImage() {
     QString folderName = QFileInfo(path).absoluteDir().absolutePath();
-    QString fname = 
+    QString fname =
     QFileDialog::getSaveFileName(this,
-                                 tr("Save LDR Image"), 
-                                 folderName, 
+                                 tr("Save LDR Image"),
+                                 folderName,
                                  tr("LDR Images (*.png *.jpg *.jpeg *.bmp *.tiff)"));
     saveLdr(form.viewWidget->getImage(), fname.toStdString());
 }

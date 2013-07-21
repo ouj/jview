@@ -64,4 +64,3 @@ ENDMACRO (QT4_RESOURCE_FILES)
 
 add_subdirectory(common)
 add_subdirectory(jview)
-add_subdirectory(jdiff)

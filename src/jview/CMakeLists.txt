@@ -21,6 +21,9 @@ SOURCE_GROUP("Source Files\\gen" FILES ${MOC_FILES} ${UI_FILES} ${RESOURCE_FILES
 add_executable(jview WIN32 MACOSX_BUNDLE ${SOURCES})
 
 target_link_libraries(jview ${QT_LIBRARIES} common ${EXR_LIB})
+if(UNIX AND NOT APPLE)
+    target_link_libraries(jview pthread)
+endif()
 
 if(APPLE)
 	SET( MACOSX_BUNDLE_INFO_STRING "Jiawei's Viewer")

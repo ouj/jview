@@ -10,8 +10,8 @@
 #include <QtGui/QMessageBox>
 
 JImageView::JImageView(QWidget* parent, Qt::WindowFlags f)
-    : QWidget(parent, f), mousePressed(false), 
-      offset(0, 0), scale(1.0f), exposure(0.0f), 
+    : QWidget(parent, f), mousePressed(false),
+      offset(0, 0), scale(1.0f), exposure(0.0f),
       gamma(2.2f), showInvalid(false) {
 }
 
@@ -33,14 +33,18 @@ double JImageView::computeExposure(const sarray2<vec3f> *image) {
 }
 
 void JImageView::setImage( const sarray2<vec3f> *image ) {
+    if (image == 0) {
+        error("invalid image");
+        return;
+    }
     this->image = image;
     qtimage = QImage(image->width(), image->height(), QImage::Format_RGB32);
     float exposure = computeExposure(image);
     setExposureGamma(exposure, gamma);
     activateWindow();
     setFocus();
-    qApp->activeWindow()->resize(image->width(), image->height() + 70);
-    center();
+    //qApp->activeWindow()->resize(image->width(), image->height() + 70);
+    //this->parent()->resize(image->width(), image->height() + 70);
 }
 
 void JImageView::setGamma(float gamma) {
@@ -71,7 +75,7 @@ void JImageView::update() {
             const vec3f &p = image->at(i, j);
             if (showInvalid && isanynan(p)) {
                 qtimage.setPixel(i, j, qRgb(255, 0, 0));
-            } else if (showInvalid && isanyneg(p)){ 
+            } else if (showInvalid && isanyneg(p)){
                 qtimage.setPixel(i, j, qRgb(0, 255, 0));
             } else {
                 float scale = pow(2, exposure);
@@ -98,17 +102,17 @@ void JImageView::wheelEvent( QWheelEvent * event ) {
         setScale(scale * (1 + (double)event->delta() / 600));
         return;
     }
-    
+
     if(event->modifiers() & Qt::ShiftModifier) {
         exposure += (double)event->delta() / 300;
         exposureChanged(this->exposure);
     }
-    
+
     if(event->modifiers() & Qt::ControlModifier) {
         gamma += (double)event->delta() / 300;
         gammaChanged(this->gamma);
     }
-    
+
     update();
 }
 
@@ -145,12 +149,12 @@ void JImageView::keyPressEvent( QKeyEvent *event ) {
         case Qt::Key_BracketRight:
             if (event->modifiers() & Qt::ShiftModifier) setExposure(exposure + 1.0f);
             else setExposure(exposure + 0.1f); break;
-        case Qt::Key_Minus: 
+        case Qt::Key_Minus:
         case Qt::Key_hyphen:
             setScale(scale * 0.9f);
             break;
         case Qt::Key_Plus:
-        case Qt::Key_Equal: 
+        case Qt::Key_Equal:
             setScale(scale * 1.1f);
             break;
         case Qt::Key_Colon:
@@ -170,7 +174,7 @@ void JImageView::keyPressEvent( QKeyEvent *event ) {
             showInvalid = !showInvalid;
             update();
             break;
-        default: 
+        default:
             QWidget::keyPressEvent(event); return;
     }
     event->accept();
