@@ -4,9 +4,9 @@
 void loadPnm(const string& filename, rawtype& type,
              int& width, int& height, int& nc,
              float& scale, rawbuffer& buffer) {
-	char identifier[4]; 
+	char identifier[4];
     bool ascii = false;
-    
+
 	FILE *f = fopen(filename.c_str(), "rb");
     if (f == 0) {
         error_if_not_va(f != 0, "failed to open image file %s", filename.c_str());
@@ -14,10 +14,10 @@ void loadPnm(const string& filename, rawtype& type,
         buffer = 0;
         return;
     }
-    
+
 	error_if_not(fscanf(f, "%s", identifier) == 1, "error reading image file");
 	string id = identifier;
-	
+
 	if("Pf" == id) { nc = 1; ascii = false; type = 'f'; }
 	else if ("PF"  == id) { nc = 3; ascii = false; type = 'f'; }
 	else if ("P2"  == id) { nc = 1; ascii = true; type = 'B'; }
@@ -25,12 +25,12 @@ void loadPnm(const string& filename, rawtype& type,
 	else if ("P5"  == id) { nc = 1; ascii = false; type = 'B'; }
 	else if ("P6"  == id) { nc = 3; ascii = false; type = 'B'; }
 	else {	error("unknown image format"); }
-    
+
 	error_if_not_va(fscanf(f, "%d%d\n", &width, &height) == 2,
                     "error reading image file %s, width: %d, height: %d",
                     filename.c_str(), width, height);
-    if(type == 'B') { 
-        buffer = (rawbuffer)(new unsigned char[width*height*nc]); 
+    if(type == 'B') {
+        buffer = (rawbuffer)(new unsigned char[width*height*nc]);
         int maxv;
         error_if_not_va(fscanf(f, "%d", &maxv) == 1, "error reading image file %s", filename.c_str());
         getc(f); //each the \n character.
@@ -49,10 +49,10 @@ void loadPnm(const string& filename, rawtype& type,
                 buf[i] = (unsigned char)v;
             }
         }
-    } else if(type == 'f') { 
+    } else if(type == 'f') {
         buffer = (rawbuffer)(new float[width*height*nc]);
         char scale_string[16];
-        fgets(scale_string, 16, f);
+        error_if_not(fgets(scale_string, 16, f), "error reading scale string");
         sscanf(scale_string, "%f\n", &scale);
         scale = abs(scale);
         // flip y while reading
@@ -62,7 +62,7 @@ void loadPnm(const string& filename, rawtype& type,
             error_if_not(bytes == width*nc, "error reading image file");
         }
     } else error("unknown type");
-    
+
     fclose(f);
 }
 
@@ -74,7 +74,7 @@ sarray2<vec3f> loadPnm3f(const string& filename) {
         return sarray2<vec3f>();
     }
     error_if_not_va(type == 'f' || type == 'B', "unsupported image format in file %s", filename.c_str());
-    
+
     sarray2<vec3f> image(width,height);
     if(type == 'f') {
         float* buf = (float*)buffer;
@@ -91,10 +91,10 @@ sarray2<vec3f> loadPnm3f(const string& filename) {
         unsigned char* buf = (unsigned char*)buffer;
         for(int i = 0; i < image.size(); i ++) {
             image.at(i) = makevec3f((float)buf[i*3+0],(float)buf[i*3+1],(float)buf[i*3+2]) * scale;
-        }        
+        }
     }
     if (buffer) delete [] buffer;
-    
+
     return image;
 }
 
@@ -104,24 +104,24 @@ void savePnm(const char *filename, rawtype type,
 	FILE *f = fopen(filename, "wb");
 	error_if_not_va(f != 0, "failed to create image file %s", filename);
 
-    string magic; 
-    int scale = -1; 
+    string magic;
+    int scale = -1;
     int ds = 0;
-    if(type == 'f' && nc == 1 && !ascii) { magic = "Pf"; scale = -1; 
+    if(type == 'f' && nc == 1 && !ascii) { magic = "Pf"; scale = -1;
         ds = sizeof(float); }
-	else if(type == 'f' && nc == 3 && !ascii) { magic = "PF"; scale = -1; 
+	else if(type == 'f' && nc == 3 && !ascii) { magic = "PF"; scale = -1;
         ds = sizeof(float); }
-	else if(type == 'B' && nc == 1 && !ascii) { magic = "P5"; scale = 255; 
+	else if(type == 'B' && nc == 1 && !ascii) { magic = "P5"; scale = 255;
         ds = sizeof(unsigned char); }
-	else if(type == 'B' && nc == 3 && !ascii) { magic = "P6"; scale = 255; 
+	else if(type == 'B' && nc == 3 && !ascii) { magic = "P6"; scale = 255;
         ds = sizeof(unsigned char); }
-	else if(type == 'B' && nc == 1 && ascii) { magic = "P2"; scale = 255; 
+	else if(type == 'B' && nc == 1 && ascii) { magic = "P2"; scale = 255;
         ds = sizeof(unsigned char); }
-	else if(type == 'B' && nc == 3 && ascii) { magic = "P3"; scale = 255; 
+	else if(type == 'B' && nc == 3 && ascii) { magic = "P3"; scale = 255;
         ds = sizeof(unsigned char); }
     else error("unsupported image format");
-    
-    error_if_not_va(fprintf(f, "%s\n", magic.c_str()) > 0, "error writing file %s", filename);    
+
+    error_if_not_va(fprintf(f, "%s\n", magic.c_str()) > 0, "error writing file %s", filename);
     error_if_not_va(fprintf(f, "%d %d\n", width, height) > 0, "error writing file %s", filename);
     error_if_not_va(fprintf(f, "%d\n", scale) > 0, "error writing file %s", filename);
 
@@ -141,7 +141,7 @@ void savePnm(const char *filename, rawtype type,
             error_if_not_va(fprintf(f, "%d \n", v) != 0, "error writing file %s", filename);
         }
     }
-    
+
 	fclose(f);
 }
 

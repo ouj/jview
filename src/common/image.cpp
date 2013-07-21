@@ -19,9 +19,9 @@ sarray2<vec3f> loadExr(const string &name) {
         Box2i dw = file.header().dataWindow();
         int width  = dw.max.x - dw.min.x + 1;
         int height = dw.max.y - dw.min.y + 1;
-        
+
         half *rgb = new half[3 * width * height];
-        
+
         FrameBuffer frameBuffer;
         frameBuffer.insert("R", Slice(HALF, (char *)rgb,
                                       3*sizeof(half), width * 3 * sizeof(half), 1, 1, 0.0));
@@ -29,10 +29,10 @@ sarray2<vec3f> loadExr(const string &name) {
                                       3*sizeof(half), width * 3 * sizeof(half), 1, 1, 0.0));
         frameBuffer.insert("B", Slice(HALF, (char *)rgb+2*sizeof(half),
                                       3*sizeof(half), width * 3 * sizeof(half), 1, 1, 0.0));
-        
+
         file.setFrameBuffer(frameBuffer);
         file.readPixels(dw.min.y, dw.max.y);
-        
+
         sarray2<vec3f> image(width, height);
         for (int i = 0; i < width * height; ++i) {
             image[i] = makevec3f(rgb[3*i], rgb[3*i+1], rgb[3*i+2]);
@@ -101,8 +101,9 @@ static int16_t shortSwap(int16_t n)
 
 static uchar readByte(FILE* f)
 {
-    uchar               v;
-    fread(&v, sizeof(v), 1, f);
+    uchar v;
+    error_if_not(fread(&v, sizeof(v), 1, f) == sizeof(v),
+                 "error reading byte");
     return v;
 }
 
@@ -110,8 +111,9 @@ static uchar readByte(FILE* f)
 
 static int16_t readShort(FILE* f)
 {
-    int16_t             v;
-    fread(&v, sizeof(v), 1, f);
+    int16_t v;
+    error_if_not(fread(&v, sizeof(v), 1, f) == sizeof(v),
+                 "error reading short");
     return v;
 }
 
@@ -153,18 +155,18 @@ sarray2<vec3f> loadTga(const string &name) {
     tga_imagespec_t     imageSpec;
     uchar*              srcBuf;
     const uchar*        src;
-    
+
     FILE *file = fopen(name.c_str(), "rb");
     if (!file) {
         fprintf(stderr,"Unable to open TGA file \"%s\"\n", name.c_str());
         return sarray2<vec3f>();
     }
-    
+
     // Read and check the header.
     readHeader(&header, file);
     readColorMapSpec(&colorMapSpec, file);
     readImageSpec(&imageSpec, file);
-    
+
     if (((imageSpec.attributeBits & 0xf) != 8 &&  // num attribute bits
          (imageSpec.attributeBits & 0xf) != 0) ||
         ((imageSpec.attributeBits & 0xc0) != 0) || // no interleaving
@@ -180,10 +182,10 @@ sarray2<vec3f> loadTga(const string &name) {
         fclose(file);
         return sarray2<vec3f>();
     }
-    
+
     int width = imageSpec.width;
     int height = imageSpec.height;
-    
+
     // Determine format.
     if (imageSpec.pixelDepth == 32)
         pixbytes = 4;
@@ -193,7 +195,7 @@ sarray2<vec3f> loadTga(const string &name) {
         assert(imageSpec.pixelDepth == 8);
         pixbytes = 1;
     }
-    
+
     // Read the pixel data.
     int size = width * height * pixbytes;
     srcBuf = (uchar *)malloc(size);
@@ -203,7 +205,7 @@ sarray2<vec3f> loadTga(const string &name) {
         fclose(file);
         return sarray2<vec3f>();
     }
-    
+
     // "Unpack" the pixels (origin in the lower left corner).
     // TGA pixels are in BGRA format.
     src = srcBuf;
@@ -224,7 +226,7 @@ sarray2<vec3f> loadTga(const string &name) {
                     ++src;
             }
         }
-    
+
     bool flipH = ((imageSpec.attributeBits & 0x10) == 0x10);
     bool flipV = ((imageSpec.attributeBits & 0x20) == 0x20);
     if (flipH) {
@@ -250,8 +252,8 @@ sarray2<vec3f> loadLdr(const string &name) {
         for (int j = 0; j < im.height(); j++) {
             for (int i = 0; i < im.width(); i++) {
                 QRgb rgb = im.pixel(i, j);
-                image.at(i, j) = makevec3f(qRed(rgb) / 255.0f, 
-                                           qGreen(rgb) / 255.0f, 
+                image.at(i, j) = makevec3f(qRed(rgb) / 255.0f,
+                                           qGreen(rgb) / 255.0f,
                                            qBlue(rgb) / 255.0f);
             }
         }

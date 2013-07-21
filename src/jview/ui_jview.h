@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'jview.ui'
 **
-** Created: Sun Jul 21 00:52:12 2013
+** Created: Sun Jul 21 10:28:39 2013
 **      by: Qt User Interface Compiler version 4.8.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
