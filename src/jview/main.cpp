@@ -17,6 +17,10 @@ int main(int argc, char** argv)
 #ifndef APPLE
     if(argc >= 2)
         app.open(argv[1], true);
+    else {
+        message("usage: jview imagefile");
+        return 0;
+    }
 #endif // APPLE
 	return app.exec();
 }
